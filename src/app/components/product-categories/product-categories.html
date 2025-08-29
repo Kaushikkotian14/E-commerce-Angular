@@ -1,0 +1,51 @@
+<mat-grid-list cols="3" rowHeight="1:1" gutterSize="8px">
+
+    <mat-grid-tile>
+      <mat-card class="custom-card">
+        <mat-card-header>
+          <mat-card-title><b>Treatment</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="treatment.png" alt="treatment">
+        <mat-card-content>
+          <p> All procedure details are available here</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+      <button matFab extended routerLink="/procedures">  View Treatments</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+              <mat-card class="custom-card">
+        <mat-card-header>
+          <mat-card-title><b>Medicines</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="medicine.png" alt="treatment">
+        <mat-card-content>
+          <p> All medicines details are available here</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+      <button matFab extended routerLink="/medicines">  View Medicines</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-card class="custom-card">
+        <mat-card-header>
+          <mat-card-title><b>Rooms</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="room.png" alt="treatment">
+        <mat-card-content>
+          <p> All rooms details and availability status are available here</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+      <button matFab extended routerLink="/rooms">  View Rooms</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  
+
+    
+</mat-grid-list>

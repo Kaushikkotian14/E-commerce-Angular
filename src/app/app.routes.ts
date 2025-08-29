@@ -25,7 +25,11 @@ export const routes: Routes = [
       },
        {
         path: 'order-history',
-        loadComponent: () => import('./components/order-history/order-history').then(m => m.OrderHistory),
+        loadComponent: () => import('./components/order-history/order-history').then(m => m.OrderHistory),canActivate: [authGuard],
+      },
+             {
+        path: 'product-categories',
+        loadComponent: () => import('./components/product-categories/product-categories').then(m => m.ProductCategories),
       },
 
 ];

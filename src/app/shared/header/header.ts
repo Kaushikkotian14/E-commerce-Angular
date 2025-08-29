@@ -10,9 +10,11 @@ import { RouterLink,Router } from '@angular/router';
   styleUrl: './header.scss'
 })
 export class Header {
+  public isLoggedin=false
 constructor(private router:Router){}
 
 public logOut(){
+  localStorage.removeItem('currentUser')
   this.router.navigate(['/login']);
 }
 }

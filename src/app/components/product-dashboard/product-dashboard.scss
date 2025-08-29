@@ -1,0 +1,35 @@
+.custom-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  background-color: rgb(222, 223, 222);
+  
+}
+
+.add-button{
+   margin-top:10px ;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    font-size: larger;
+}
+
+
+mat-card-actions {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+img[mat-card-image] {
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu{
+  margin-left: 80%;
+  
+}

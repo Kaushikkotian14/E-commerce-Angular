@@ -1,0 +1,72 @@
+<h1 mat-dialog-title>{{ data ? 'Edit Patient' : 'Add New Patient' }}</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="productForm">
+        <mat-form-field>
+            <mat-label>Product Name</mat-label>
+            <input matInput formControlName="productName" />
+            <mat-error>
+                @if (productForm.get('productName')?.invalid) {
+                Product Name is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Image URL</mat-label>
+            <input matInput formControlName="img" />
+            <mat-error>
+                @if (productForm.get('img')?.invalid) {
+                Image URL is required
+                }
+            </mat-error>
+            <!-- <mat-file-upload formControlName="img">upload</mat-file-upload> -->
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+            <mat-error>
+                @if (productForm.get('description')?.invalid) {
+                Description is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" />
+            <mat-error>
+                @if (productForm.get('category')?.invalid) {
+                Category is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Cost</mat-label>
+            <input matInput formControlName="cost" />
+            <mat-error>
+                @if (productForm.get('cost')?.invalid) {
+                Cost is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput formControlName="quantity" />
+            <mat-error>
+                @if (productForm.get('quantity')?.invalid) {
+                Quantity is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

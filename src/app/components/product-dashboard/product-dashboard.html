@@ -1,1 +1,41 @@
-<p>product-dashboard works!</p>
+<button class="add-button" matFab extended color="primary" (click)="openDialog()"><mat-icon >add</mat-icon>New Product</button>
+
+
+
+<mat-grid-list cols="4" rowHeight="1:1" gutterSize="4px">
+  @for (product of products; track product.productId) {
+    <mat-grid-tile>
+      <mat-card class="custom-card">
+        <mat-card-header>
+          <mat-card-title><b>{{ product.productName }}</b></mat-card-title>
+   <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+                                      <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="openDialog(product)">Edit</button>
+                                        <button mat-menu-item (click)="deleteProduct(product.productId)">Delete</button>
+                                    </mat-menu>
+
+        </mat-card-header>
+
+        <img mat-card-image src={{product.img}} alt="Profile Photo"/>
+
+        <mat-card-content>
+          <p>
+            <b>Description:</b> {{ product.description }} <br>
+            <b>Category:</b> {{ product.category }} <br />
+            <b>Cost :</b>  {{ product.cost }} <br />
+            <b> Quantity:</b> {{ product.quantity}} <br />
+            <!-- <b> Availability:</b> {{ product.quantity}} <br /> -->
+
+          </p>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+      <button mat-button color="accent"><mat-icon>bookmark</mat-icon>Add to Cart</button>
+      <button mat-button color="warn"><mat-icon>shopping_cart</mat-icon>Shop now</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  }
+</mat-grid-list>
