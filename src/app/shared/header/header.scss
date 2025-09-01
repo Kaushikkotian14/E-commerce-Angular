@@ -1,6 +1,6 @@
 .tabs{
-    display: flex;
-    justify-content: right;
+    
+
     margin-top:0px;
     width: 100%;
     background-color: rgb(252, 225, 116);
@@ -12,4 +12,7 @@
 button{
     font-size: large;
     margin-bottom:10px;
+    justify-content: right;
+    float: right;
 }
+

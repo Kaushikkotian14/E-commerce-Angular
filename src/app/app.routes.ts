@@ -16,7 +16,7 @@ export const routes: Routes = [
         loadComponent: () => import('./components/product-dashboard/product-dashboard').then(m => m.ProductDashboard),canActivate: [authGuard],
       },
        {
-        path: 'product-details',
+        path: 'product-details/:id',
         loadComponent: () => import('./components/product-details/product-details').then(m => m.ProductDetails),
       },
        {

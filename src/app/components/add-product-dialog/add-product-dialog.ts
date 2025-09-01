@@ -4,12 +4,18 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { productModel } from '../../core/models/product.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import {MatSelectModule} from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFileUploadModule } from 'mat-file-upload';
+
+export interface CategoryModel{
+  name:string,
+  value:string
+}
+
 @Component({
   selector: 'app-add-product-dialog',
-  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatFileUploadModule],
+  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatFileUploadModule,MatSelectModule],
   templateUrl: './add-product-dialog.html',
   styleUrl: './add-product-dialog.scss'
 })
@@ -31,9 +37,17 @@ public productForm: FormGroup;
     });
   }
 
+   catogeries: CategoryModel[] = [
+    {name: 'Electronic Appliances', value: 'Electronic Appliances'},
+    {name: 'Grocery', value: 'Grocery'},
+    {name: 'Cosmatics', value: 'Cosmatics'},
+    {name: 'Fashion', value: 'Fashion'},
+    {name: 'Food', value: 'Food'},
+    {name: 'Toys', value: 'Toys'},
+    {name: 'Sports', value: 'Sports'},
+  ];
+
   public save() {
-    // console.log(this.productForm.value);
-    // console.log(this.data)
     if (this.productForm.valid) {
      
       this.dialogRef.close({
@@ -46,4 +60,5 @@ public productForm: FormGroup;
   public close() {
     this.dialogRef.close();
   }
+  
 }

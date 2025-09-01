@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
  import { MatButtonModule } from '@angular/material/button';
 import { RouterLink,Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,21 @@ import { RouterLink,Router } from '@angular/router';
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
-  public isLoggedin=false
-constructor(private router:Router){}
+export class Header implements OnInit {
+  public isLoggedIn=false
+constructor(private router:Router, private authService:AuthService){}
+
+ngOnInit(): void {
+    this.authService.isLoggedIn$().subscribe(status => {
+      this.isLoggedIn = status;
+    });
+    console.log(this.isLoggedIn)
+  }
+
 
 public logOut(){
-  localStorage.removeItem('currentUser')
+  this.authService.logOut();
   this.router.navigate(['/login']);
 }
+
 }

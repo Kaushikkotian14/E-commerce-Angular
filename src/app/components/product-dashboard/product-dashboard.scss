@@ -29,7 +29,14 @@ img[mat-card-image] {
   border-bottom: 1px solid #ddd;
 }
 
-.menu{
-  margin-left: 80%;
-  
+
+.top{
+   display: flex;
+  justify-content: space-between;
+  width: 60%; 
+}
+
+.search{
+  margin-top:10px;
+  width:40%;
 }

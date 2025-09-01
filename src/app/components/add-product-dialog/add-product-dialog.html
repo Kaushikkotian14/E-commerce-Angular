@@ -33,15 +33,20 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Category</mat-label>
-            <input matInput formControlName="category" />
-            <mat-error>
+
+    <mat-form-field>
+    <mat-label>Select Category</mat-label>
+    <mat-select formControlName="category">
+    @for (catogery of catogeries; track catogery) {
+      <mat-option [value]="catogery.value">{{catogery.name}}</mat-option>
+    }
+  </mat-select>
+   <mat-error>
                 @if (productForm.get('category')?.invalid) {
                 Category is required
                 }
             </mat-error>
-        </mat-form-field>
+  </mat-form-field>
 
         <mat-form-field>
             <mat-label>Cost</mat-label>

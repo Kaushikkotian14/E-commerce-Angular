@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { userModel } from '../../core/models/user.model';
+import { AuthService } from '../../core/services/auth-service';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class Login implements OnInit{
 public users:userModel[]=[]
 public currentUser!: userModel;
 
-  constructor(private fb: FormBuilder, private router: Router ) {
+  constructor(private fb: FormBuilder, private router: Router, private authService:AuthService ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -41,10 +43,10 @@ public currentUser!: userModel;
      const currentUser = this.users.find((user:userModel)=> user.email == email && user.password == password);
 
      if(currentUser != undefined)
-     localStorage.setItem('currentUser',JSON.stringify(currentUser));
+     this.authService.login(currentUser);
     if(localStorage.getItem('currentUser')){
       alert('Login successful!');
-      this.router.navigate(['/product-categories']);
+      this.router.navigate(['/product-dashboard']);
     }
     else{
     alert("Invalid credentials");
