@@ -1,6 +1,10 @@
 <div> 
-<img  src={{product?.img}}>
-    <div class="title"><b>{{product?.productName}}</b></div> 
+ <div class="title"><b>{{product?.productName}}</b></div>
+<div class="image-container">
+  @for (image of product?.img; track $index) {
+    <img [src]="image" alt="Product Image {{ $index + 1 }}">
+  }
+</div>  
     <div class="description">{{product?.description}}</div>
     <div class="cost"><b>{{product?.cost | currency:'INR':'symbol':'1.0-2'}} </b></div>  
     <div class="availability" [style.color]="product!.quantity > 0 ? 'green' : 'red'"> {{product!.quantity > 0 ? 'In Stock' : 'Out of Stock' }}</div> 
@@ -10,7 +14,6 @@
 
 <input class="increment" matInput [formControl]="quantityValue" type="number" min="0" max={{product?.quantity}} value="0">
       
-   
 <div class="action-button"> 
  <button mat-button color="accent" (click)="addToCart(product!)"> <mat-icon>bookmark</mat-icon>Add to Cart</button>
 <button mat-button color="warn" (click)="placeOrder(product!)"><mat-icon>shopping_cart</mat-icon>Shop now</button>
