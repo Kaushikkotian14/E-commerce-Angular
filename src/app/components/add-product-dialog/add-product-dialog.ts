@@ -1,17 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup,FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { productModel } from '../../core/models/product.model';
+import { CategoryModel } from '../../core/models/category.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFileUploadModule } from 'mat-file-upload';
-
-export interface CategoryModel{
-  name:string,
-  value:string
-}
 
 @Component({
   selector: 'app-add-product-dialog',

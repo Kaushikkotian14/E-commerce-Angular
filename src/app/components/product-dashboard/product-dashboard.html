@@ -44,7 +44,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cost">
       Cost
     </th>
-    <td mat-cell *matCellDef="let product"> {{ product.cost | currency:'INR' }} </td>
+    <td mat-cell *matCellDef="let product"> {{ product.cost | currency:'INR' :'symbol':'1.0-2' }} </td>
   </ng-container>
 
    <ng-container matColumnDef="quantity">
@@ -57,7 +57,7 @@
    <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef> Action</th>
     <td mat-cell *matCellDef="let product">
-       <button mat-button color="accent"  (click)="productDetail(product.productId)"> <mat-icon>bookmark</mat-icon>Add to Cart</button>
+       <button mat-button color="accent"  (click)="productDetail(product.productId)"><mat-icon>info</mat-icon>View product</button>
       <!-- <button mat-button color="warn"><mat-icon>shopping_cart</mat-icon>Shop now</button> -->
      <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
                                       <mat-icon>more_vert</mat-icon>

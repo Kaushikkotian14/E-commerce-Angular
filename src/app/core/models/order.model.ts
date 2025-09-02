@@ -3,7 +3,11 @@ import { productModel } from "./product.model";
 
 export interface orderModel{
    orderId:number;
+   userId:number;
    orderedDate:Date;
-   userEmail:userModel["email"];
+   address:string;
+   quantity:number;
+   totalCost:number;
+   userEmail:string;
    product:productModel;
 }

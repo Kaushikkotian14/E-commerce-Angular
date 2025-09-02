@@ -7,5 +7,5 @@ export interface productModel{
     category:string;
     cost:number;
     quantity:number;
-    productReview:reviewModel[]
+    productReview?:reviewModel[]
 }

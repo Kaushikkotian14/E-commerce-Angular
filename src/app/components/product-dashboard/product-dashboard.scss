@@ -24,6 +24,7 @@ mat-card-actions {
 }
 
 img[mat-card-image] {
+  margin-top:10px;
   height: 180px;
   object-fit: cover;
   border-bottom: 1px solid #ddd;

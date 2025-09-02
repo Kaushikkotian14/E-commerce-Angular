@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { productModel } from '../models/product.model';
+import { Q } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,25 @@ export class Product {
       updatedProduct.quantity = newProduct.quantity;
     }
     localStorage.setItem('products',JSON.stringify(products))
+  }
+
+  public updateQuantity(newProduct: productModel,quantity:number){
+    const products = this.getProducts();
+     const selectedProduct = products.find(data => data.productId == newProduct.productId)
+        const uQuantity:productModel={
+          productId:newProduct.productId,
+        category : newProduct.category,
+      cost : newProduct.cost,
+      description : newProduct.description,
+      img : newProduct.img,
+      productName : newProduct.productName,
+      quantity : newProduct.quantity - quantity,
+        }
+        if(uQuantity !== undefined){
+        this.updateProduct(uQuantity)
+          this.getProducts()
+          console.log("updateQ",this.getProducts())
+      }
   }
 
   public deleteProduct(id:number){

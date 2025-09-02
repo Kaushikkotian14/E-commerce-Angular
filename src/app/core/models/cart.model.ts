@@ -3,7 +3,9 @@ import { productModel } from "./product.model";
 
 export interface cartModel{
    cartId:number;
-   userEmail:userModel["email"];
+   userId:number;
+   userEmail?:userModel["email"];
+   quantity:number;
+   totalCost:number;
    product:productModel;
-   status:boolean
 }

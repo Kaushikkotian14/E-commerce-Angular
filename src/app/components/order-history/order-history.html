@@ -1,1 +1,25 @@
-<p>order-history works!</p>
+<h1 class="header" header><b>Order Details ({{userOrder.length}})</b></h1>
+@for (order of userOrder; track order.orderId) {
+<mat-card class="custom-card">
+    <!--  (click)="cardClick(order.product.productId)" -->
+    <mat-card-header class="header" (click)="cardClick(order.product.productId)">
+        <mat-card-title class="title"><b>{{order.product.productName}}</b></mat-card-title>
+    </mat-card-header>
+    
+    <span class="total"> <b>Total : {{order.totalCost | currency:'INR' :'symbol':'1.0-2' }} </b> </span>
+    <mat-card-content (click)="cardClick(order.product.productId)">
+        <img mat-card-image src={{order.product.img}} alt="Profile Photo" />
+        <div class="content"> 
+        <p ><b>Address : </b>{{order.address}} </p>
+        <div><b>Ordered Date :</b> {{order.orderedDate | date}}</div><br>
+        <!-- <div class="cost"><b> {{order.product.cost | currency:'INR' :'symbol':'1.0-2' }}</b> </div> <br> -->
+
+        <div> <b>Purchased : </b> {{order.quantity}} units </div>
+</div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button matFab extended class="remove-button" (click)="removeOrder(order.orderId)">
+            <mat-icon>close</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+}

@@ -1,1 +1,26 @@
-<p>cart works!</p>
+      <h1 class="header"header><b>Cart Details ({{userCart.length}})</b></h1>
+      @for (cart of userCart; track cart.cartId) {
+      <mat-card class="custom-card">
+
+        <mat-card-header class ="header"  (click)="cardClick(cart.product.productId)">
+                   
+          <mat-card-title class="title"><b>{{cart.product.productName}}</b></mat-card-title>
+   
+
+        </mat-card-header>
+   <span class="total"> <b>Total : {{cart.totalCost | currency:'INR' :'symbol':'1.0-2' }}  </b>     </span> 
+        <mat-card-content  (click)="cardClick(cart.product.productId)">
+             <img mat-card-image src={{cart.product.img}} alt="Profile Photo"/>
+          <p class="content">
+            <b>Description : </b>{{cart.product.description}}</p>            
+            <div class="cost"><b> {{cart.product.cost | currency:'INR' :'symbol':'1.0-2' }}</b> </div>  <br>
+           <div><b> Quantity added  {{cart.quantity}} </b> </div> 
+            <div class="availability" [style.color]="cart.product!.quantity > 0 ? 'green' : 'red'"> {{cart.product!.quantity > 0 ? 'In Stock' : 'Out of Stock' }}</div> <br>
+     <div class="quantity">Only <b> {{cart.product.quantity}}</b> left</div> 
+
+        </mat-card-content> 
+        <mat-card-actions align="end">
+             <button matFab extended class="remove-button" (click)="removeCart(cart.cartId)"> <mat-icon>close</mat-icon></button>
+        </mat-card-actions>
+        </mat-card>
+    }

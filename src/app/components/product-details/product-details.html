@@ -1,3 +1,20 @@
-<img src={{product?.img}} width="100" height="140">
-    <div class="title"><b>{{product?.productName}}</b></div>      
+<div> 
+<img  src={{product?.img}}>
+    <div class="title"><b>{{product?.productName}}</b></div> 
+    <div class="description">{{product?.description}}</div>
+    <div class="cost"><b>{{product?.cost | currency:'INR':'symbol':'1.0-2'}} </b></div>  
+    <div class="availability" [style.color]="product!.quantity > 0 ? 'green' : 'red'"> {{product!.quantity > 0 ? 'In Stock' : 'Out of Stock' }}</div> 
+   @if(product!.quantity < 11) { <div class="quantity">Only <b> {{product?.quantity}}</b> left</div> }
+      
+</div>
 
+<input class="increment" matInput [formControl]="quantityValue" type="number" min="0" max={{product?.quantity}} value="0">
+      
+   
+<div class="action-button"> 
+ <button mat-button color="accent" (click)="addToCart(product!)"> <mat-icon>bookmark</mat-icon>Add to Cart</button>
+<button mat-button color="warn" (click)="placeOrder(product!)"><mat-icon>shopping_cart</mat-icon>Shop now</button>
+</div>
+<div class="review"><app-review></app-review> </div>
+
+      
