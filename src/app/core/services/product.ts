@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { productModel } from '../models/product.model';
-import { Q } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root'

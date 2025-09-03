@@ -1,1 +1,26 @@
-<h1>Reviews</h1>
+<h1>Reviews <b>({{productReviews.length}})</b><span><button class="add-button" mat-raised-button color="warn" (click)="addReview()"><mat-icon>add</mat-icon> Add Review</button></span> </h1>
+
+<div >
+@for (productReview of productReviews; track productReview.reviewId) {
+<mat-card class="custom-card">
+   
+    <mat-card-header >
+        <mat-card-title > <img mat-card-image src='https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg' alt="Profile Photo" /> <b> {{productReview.username}}</b></mat-card-title>
+        <mat-card-actions align="end">
+        <button matFab extended class="remove-button" (click)="removeReview(productReview.reviewId)" >
+            <mat-icon>close</mat-icon></button>
+    </mat-card-actions>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="content"> 
+        <p >{{productReview.review}} </p>
+        <div><b>Date :</b> {{productReview.reviewDate | date}}</div><br>
+        
+</div>
+
+    </mat-card-content>
+    
+</mat-card>
+}
+</div>
+<!-- (click)="removeOrder(order.orderId)" -->

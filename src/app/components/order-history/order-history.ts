@@ -3,14 +3,15 @@ import { MatCardModule } from '@angular/material/card';
 import { orderModel } from '../../core/models/order.model';
 import { Order } from '../../core/services/order';
 import { userModel } from '../../core/models/user.model';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { AuthService } from '../../core/services/auth-service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-history',
-  imports: [MatCardModule,MatIcon,CurrencyPipe,DatePipe],
+  imports: [MatCardModule,MatIconModule,CurrencyPipe,DatePipe,MatButtonModule],
   templateUrl: './order-history.html',
   styleUrl: './order-history.scss'
 })

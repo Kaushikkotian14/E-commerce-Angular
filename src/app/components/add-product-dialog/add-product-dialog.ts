@@ -26,9 +26,7 @@ export class AddProductDialog {
     this.productForm = this.fb.group({
       productName: [data?.productName || '', Validators.required],
       img: this.fb.array(
-        data?.img?.length
-          ? data.img.map((url) => this.fb.control(url, Validators.required))
-          : [this.fb.control('', Validators.required)]
+        data?.img?.length ? data.img.map((url) => this.fb.control(url, Validators.required)) : [this.fb.control('', Validators.required)]
       ),
       description: [data?.description || '', Validators.required],
       category: [data?.category || '', Validators.required],

@@ -7,11 +7,12 @@ import { MatIcon } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
 import { AuthService } from '../../core/services/auth-service';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-cart',
-  imports: [MatCardModule,MatIcon,CurrencyPipe],
+  imports: [MatCardModule,MatIcon,CurrencyPipe,MatButtonModule],
   templateUrl: './cart.html',
   styleUrl: './cart.scss'
 })

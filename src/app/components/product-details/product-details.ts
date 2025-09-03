@@ -10,7 +10,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Cart } from '../../core/services/cart';
-import { cartModel } from '../../core/models/cart.model';
 import { ReactiveFormsModule,FormControl } from '@angular/forms';
 import { OrderDialog } from '../order-dialog/order-dialog';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -26,6 +25,7 @@ import { Review } from '../review/review';
 })
 export class ProductDetails implements OnInit{
 public id!:number;
+public showReview:boolean=false;
 public quantityValue= new FormControl(0);
 public product:productModel | undefined;
 public products!:productModel[];
@@ -69,8 +69,10 @@ public placeOrder(product?: productModel) {
 
     dialogRef.afterClosed().subscribe(result => {
    this.getProduct()
-  });
+  }); 
+  }
 
-    
+  public showReviewStatus(){
+    this.showReview=!this.showReview;
   }
 }
