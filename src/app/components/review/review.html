@@ -7,14 +7,16 @@
     <mat-card-header >
         <mat-card-title > <img mat-card-image src='https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg' alt="Profile Photo" /> <b> {{productReview.username}}</b></mat-card-title>
         <mat-card-actions align="end">
+            @if(productReview.userId === currentUser.userId){
         <button matFab extended class="remove-button" (click)="removeReview(productReview.reviewId)" >
-            <mat-icon>close</mat-icon></button>
+            <mat-icon>close</mat-icon></button>}
     </mat-card-actions>
     </mat-card-header>
     <mat-card-content>
         <div class="content"> 
         <p >{{productReview.review}} </p>
-        <div><b>Date :</b> {{productReview.reviewDate | date}}</div><br>
+        <div><b>Date :</b> {{productReview.reviewDate | date}} &nbsp;
+        <b>Time :</b> {{productReview.reviewDate | date:'h:mm:ss a'}}</div><br>
         
 </div>
 

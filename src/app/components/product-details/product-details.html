@@ -17,12 +17,27 @@
 <div class="action-button"> 
   <input class="increment" matInput [formControl]="quantityValue" type="number" min="0" max={{product?.quantity}} value="0">
  <button mat-button color="accent" (click)="addToCart(product!)"> <mat-icon>bookmark</mat-icon>Add to Cart</button>
-<button mat-button color="warn" (click)="placeOrder(product!)"><mat-icon>shopping_cart</mat-icon>Shop now</button>
+<!-- <button mat-button color="warn" (click)="placeOrder()"><mat-icon>shopping_cart</mat-icon>Shop now</button> -->
 </div>
 
 <button mat-raised-button (click)="showReviewStatus()" class="review-button">View Reviews</button>
 @if(showReview){
 <div class="review"  ><app-review [id]="product!.productId"></app-review> </div>
 }
+
+<h1>Related products with free delivery on eligible orders</h1>
+  <div class="image-container" >
+  @for(item of categoryProducts; track $index){
+<mat-card  (click)="cardClick(item!.productId)"> 
+  <div class="content"   (click)="cardClick(item!.productId)"><b>  {{item?.productName}}</b></div>
+<div   (click)="cardClick(item!.productId)">    <img [src]=item.img alt="Product Image"></div>
+  <div class="cost"><b>{{item?.cost | currency:'INR':'symbol':'1.0-2'}}</b>  </div> 
+      <div class="availability" [style.color]="item!.quantity > 0 ? 'green' : 'red'"> {{item!.quantity > 0 ? 'In Stock' : 'Out of Stock' }}</div>  
+    <div>    @if(item!.quantity < 11) { <div class="quantity">Only <b> {{item?.quantity}}</b> left</div> }</div>
+</mat-card>
+}
+   
+
+</div>
 
       

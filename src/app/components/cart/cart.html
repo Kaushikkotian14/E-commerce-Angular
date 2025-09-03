@@ -1,4 +1,7 @@
-      <h1 class="header"header><b>Cart Details ({{userCart.length}})</b></h1>
+      <div>  <h1 class="header"><b>Cart Details ({{userCart.length}})</b> <br> </h1> 
+      <h2 class="header"> <b>Total Cost : {{totalAmount |  currency:'INR' :'symbol':'1.0-2'}}</b> </h2>
+      <span> <button matFab extended class="order" (click)="placeOrder()" >Place Order</button></span> 
+     </div>
       @for (cart of userCart; track cart.cartId) {
       <mat-card class="custom-card">
 
@@ -16,7 +19,7 @@
             <div class="cost"><b> {{cart.product.cost | currency:'INR' :'symbol':'1.0-2' }}</b> </div>  <br>
            <div><b> Quantity added  {{cart.quantity}} </b> </div> 
             <div class="availability" [style.color]="cart.product!.quantity > 0 ? 'green' : 'red'"> {{cart.product!.quantity > 0 ? 'In Stock' : 'Out of Stock' }}</div> <br>
-     <div class="quantity">Only <b> {{cart.product.quantity}}</b> left</div> 
+    
 
         </mat-card-content> 
         <mat-card-actions align="end">

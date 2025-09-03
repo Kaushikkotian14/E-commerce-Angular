@@ -105,6 +105,9 @@ export class ProductDashboard implements AfterViewInit, OnInit {
     this.router.navigate(['/product-details/', id])
   }
 
+public cardClick(id:number){
+   this.router.navigate(['/product-details/', id])
+}
 
 }
 

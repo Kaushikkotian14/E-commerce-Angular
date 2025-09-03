@@ -13,15 +13,15 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header >
       View
     </th>
-    <td mat-cell *matCellDef="let product"> <img mat-card-image src={{product.img}} alt="Profile Photo"/> </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> <img mat-card-image src={{product.img}} alt="Profile Photo"/> </td>
   </ng-container>
 
   
-  <ng-container matColumnDef="productName">
+  <ng-container matColumnDef="productName" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by productName">
       Name
     </th>
-    <td mat-cell *matCellDef="let product"> <b>{{product.productName}}</b> </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> <b>{{product.productName}}</b> </td>
   </ng-container>
 
   
@@ -29,35 +29,35 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
       Description
     </th>
-    <td mat-cell *matCellDef="let product"> {{product.description}} </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.description}} </td>
   </ng-container>
 
 
-  <ng-container matColumnDef="category">
+  <ng-container matColumnDef="category" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by category">
       Category
     </th>
-    <td mat-cell *matCellDef="let product"> {{product.category}} </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.category}} </td>
   </ng-container>
 
   <ng-container matColumnDef="cost">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cost">
       Cost
     </th>
-    <td mat-cell *matCellDef="let product"> {{ product.cost | currency:'INR' :'symbol':'1.0-2' }} </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{ product.cost | currency:'INR' :'symbol':'1.0-2' }} </td>
   </ng-container>
 
-   <ng-container matColumnDef="quantity">
+   <ng-container matColumnDef="quantity" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by quantity">
       Quantity
     </th>
-    <td mat-cell *matCellDef="let product"> {{product.quantity}} </td>
+    <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.quantity}} </td>
   </ng-container>
 
    <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef> Action</th>
     <td mat-cell *matCellDef="let product">
-       <button mat-button color="accent"  (click)="productDetail(product.productId)"><mat-icon>info</mat-icon>View product</button>
+       <!-- <button mat-button color="accent"  (click)="productDetail(product.productId)"><mat-icon>info</mat-icon>View product</button> -->
       <!-- <button mat-button color="warn"><mat-icon>shopping_cart</mat-icon>Shop now</button> -->
      <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
                                       <mat-icon>more_vert</mat-icon>

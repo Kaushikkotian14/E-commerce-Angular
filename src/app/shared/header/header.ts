@@ -24,7 +24,9 @@ ngOnInit(): void {
 
 public logOut(){
   this.authService.logOut();
-  this.router.navigate(['/login']);
+   window.location.replace('/login');
+  
+  
 }
 
 }
