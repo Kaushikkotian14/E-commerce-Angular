@@ -14,6 +14,8 @@ import { reviewModel } from '../../core/models/product-reviews.model';
 import { Reviews } from '../../core/services/reviews';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
+import { Order } from '../../core/services/order';
+import { orderModel } from '../../core/models/order.model';
 
 
 @Component({
@@ -27,14 +29,19 @@ public product:productModel | undefined;
 public products!:productModel[];
 public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '{}')
 public reviews!:reviewModel[];
+public orders!:orderModel[];
+public userOrders!:orderModel[];
 public productReviews!:reviewModel[];
+public userCartProductId:number[]=[];
+public orderProductCheck!:number;
  @Input() id!: number ;
 
-constructor( private productService:Product, private authService:AuthService, private reviewService:Reviews,private dialog: MatDialog){}
+constructor( private productService:Product, private authService:AuthService, private reviewService:Reviews,private dialog: MatDialog, private orderService :Order){}
 
 ngOnInit(): void {
 this.getReviews();
 this.getProducts();
+this.getOrders();
 }
 
 public getReviews(){
@@ -48,7 +55,21 @@ public getProducts(){
   this.authService.login(this.currentUser)
  this.products= this.productService.getProducts();
  this.product=this.products.find(product => product.productId === this.id)
- console.log('this',this.product)
+}
+
+public getOrders(){
+  this.authService.login(this.currentUser)
+ this.orders= this.orderService.getOrders();
+ this.userOrders=this.orders.filter(order => order.userId === this.currentUser.userId);
+ this.userOrders.forEach(userOrder=>{
+  userOrder.cart?.forEach(cartItem=>{
+   this.userCartProductId.push(cartItem.product.productId) 
+   console.log("cartIdishere",this.userCartProductId)
+   this.orderProductCheck = Number(this.userCartProductId.find(idData=> idData ===this.id))
+   }
+  )
+})
+  
 }
 
 public addReview() {

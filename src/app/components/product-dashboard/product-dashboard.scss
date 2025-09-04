@@ -34,10 +34,23 @@ img[mat-card-image] {
 .top{
    display: flex;
   justify-content: space-between;
-  width: 60%; 
+  width: 100%; 
 }
 
 .search{
   margin-top:10px;
   width:40%;
+}
+
+
+.filter{
+    margin-top:10px;
+     margin-right:20px;
+  width:11%;
+}
+
+.toggle{
+   margin-top:10px; 
+   margin-right:10px;
+  height:50px;
 }

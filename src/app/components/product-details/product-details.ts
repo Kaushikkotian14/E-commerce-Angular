@@ -16,8 +16,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Review } from '../review/review';
 import { cartModel } from '../../core/models/cart.model';
 import { MatCardModule } from '@angular/material/card';
+import { ParamMap } from '@angular/router';
 
- 
 
 @Component({
   selector: 'app-product-details',
@@ -43,33 +43,44 @@ this.getCart();
   
 } 
 
+
+
 public getProduct(){
   this.authService.login(this.currentUser)
  this.products= this.productService.getProducts();
-  this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
+  // this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
+  
+  this.activatedRoute.params.subscribe((params)=>{    
+     this.id=Number(params['id'])
+     console.log(typeof(this.id),this.id,params)
+  })
+
+  // this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+  //     this.id = Number(params.get('id'));
+  //     console.log(typeof(this.id),this.id,params)
+  //   });
  this.product=this.products.find(data => data.productId === this.id)
   this.categoryProducts=this.products.filter(data => data.category === this.product?.category && data.productId !== this.product.productId)
- console.log("helo",this.categoryProducts)
 
 }
 
 public getCart(){
     this.authService.login(this.currentUser)
    this.cart= this.cartService.getCart();
-   console.log("cart",this.cart)
    this.userCart=this.cart.filter(cart => cart.userId === this.currentUser.userId)
-   console.log('usercart',this.userCart)
   }
 
 public addToCart(product:productModel){
-if(product.quantity>0 && this.quantityValue.value !== 0 && (product.quantity>this.quantityValue.value! )){
+if(product.quantity>0 && Number(this.quantityValue.value) > 0 && (product.quantity>=this.quantityValue.value! )){
 const quantity=Number(this.quantityValue.value)
    this.cartService.addToCart(product,quantity);
+   this.getCart()
+   this.cartService.setCartQuantiy(this.userCart.length)
   alert("Added successfully")
   this.quantityValue.reset()
 }
 else if(product.quantity>0 && (product.quantity>this.quantityValue.value! )){
-  alert("Add quantity")
+  alert("Add proper quantity")
 }
 else{
   alert("Out of Stock")
@@ -96,3 +107,8 @@ public placeOrder(product?: productModel) {
     this.router.navigate(['/product-details/', id])
 }
 }
+
+
+// this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+//       this.id = Number(params.get('id'));
+//     });

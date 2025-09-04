@@ -6,7 +6,7 @@
       <mat-label>Product Name</mat-label>
       <input matInput formControlName="productName" />
       <mat-error>
-        @if (productForm.get('productName')?.invalid) { Product Name is required }
+        @if(productForm.get('productName')?.invalid) {Name is required}
       </mat-error>
     </mat-form-field>
 
@@ -27,8 +27,7 @@
       </div>
       }
     </div>
-    <button mat-raised-button color="primary" (click)="addImageField()">+ Add More Images</button
-    ><br /><br />
+    <button mat-raised-button color="primary" (click)="addImageField()">+ Add More Images</button><br /><br />
 
     <mat-form-field>
       <mat-label>Description</mat-label>

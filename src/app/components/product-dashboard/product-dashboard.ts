@@ -19,11 +19,13 @@ import { CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth-service';
 import { userModel } from '../../core/models/user.model';
+import { CategoryModel } from '../../core/models/category.model';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @Component({
   selector: 'app-product-dashboard',
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe],
+  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe,MatButtonToggleModule],
   templateUrl: './product-dashboard.html',
   styleUrl: './product-dashboard.scss'
 })
@@ -31,35 +33,30 @@ import { userModel } from '../../core/models/user.model';
 export class ProductDashboard implements AfterViewInit, OnInit {
   public products: productModel[] = []
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
-
+  public category:string='All';
   public displayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
-  public dataSource = new MatTableDataSource<productModel>();
+  public productDataSource = new MatTableDataSource<productModel>();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-
   constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService) { }
-
 
   ngOnInit(): void {
     this.getProducts();
-    console.log(this.dataSource)
+    console.log(this.productDataSource)
 
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    console.log('getProducts', this.dataSource.paginator)
+    this.productDataSource.sort = this.sort;
+    this.productDataSource.paginator = this.paginator;
   }
-
 
   public getProducts() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
-    this.dataSource.data = this.products;
-    console.log(this.dataSource)
+    this.productDataSource.data = this.products;
   }
 
   public openDialog(product?: productModel) {
@@ -98,7 +95,7 @@ export class ProductDashboard implements AfterViewInit, OnInit {
 
   public search(event: Event) {
     const searchTerm = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = searchTerm.trim().toLowerCase();
+    this.productDataSource.filter = searchTerm.trim().toLowerCase();
   }
 
   public productDetail(id: number) {
@@ -109,6 +106,37 @@ public cardClick(id:number){
    this.router.navigate(['/product-details/', id])
 }
 
+categories: CategoryModel[] = [
+    { name: 'All', value: 'All' },
+    { name: 'Electronic Appliances', value: 'Electronic Appliances' },
+    { name: 'Grocery', value: 'Grocery' },
+    { name: 'Cosmetics', value: 'Cosmetics' },
+    { name: 'Fashion', value: 'Fashion' },
+    { name: 'Food', value: 'Food' },
+    { name: 'Toys', value: 'Toys' },
+    { name: 'Sports', value: 'Sports' },
+  ];
+
+  public categoryData(category:string){
+    this.category=category;
+    console.log(category)
+    if(category === 'All'){
+      this.getProducts()
+    }else{
+ this.productDataSource.data= this.products.filter(product=>product.category===category)
+   console.log( this.productDataSource.data)
+    } 
+  }
+
+  public toggle(value:string){
+  
+  if(value === "In Stock"){
+       this.productDataSource.data= this.products.filter(product=>product.quantity>0 && product.category=== this.category)
+    }
+    else {
+ this.productDataSource.data= this.products.filter(product=>product.quantity === 0 && product.category=== this.category)
+   console.log( this.productDataSource.data)
+    } 
 }
 
-
+}

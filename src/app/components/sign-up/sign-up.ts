@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { userModel } from '../../core/models/user.model';
+import { passwordCheck } from '../../shared/validators/password.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,19 +16,19 @@ import { userModel } from '../../core/models/user.model';
   styleUrl: './sign-up.scss'
 })
 export class SignUp implements OnInit {
-  public form: FormGroup;
+  public signupForm: FormGroup;
   public users: userModel[] = [];
   public userObj!: userModel;
 
 
   constructor(private fb: FormBuilder, private router: Router) {
-    this.form = this.fb.group({
+    this.signupForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      phone: ['', Validators.required],
-    });
+      confirmPassword: ['', Validators.required,],
+      phone: ['', Validators.required],},
+       { validators: passwordCheck() });
   }
 
   ngOnInit(): void {
@@ -37,18 +38,31 @@ export class SignUp implements OnInit {
     }
   }
 
+  
+  public passwordCheck(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const password = control.get('password');
+        const confirmPassword = control.get('confirmPassword');
+
+        if (!password || !confirmPassword || password.value === confirmPassword.value) {
+          return null;
+        }
+        return { passwordsMismatch: true };
+      };
+    }
+
   public onSubmit() {
-    if (this.form.valid) {
-      if (this.form.value.password !== this.form.value.confirmPassword) {
+    if (this.signupForm.valid) {
+      if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
         alert('Passwords do not match!');
       } else {
-        console.log(this.form.value);
+        console.log(this.signupForm.value);
         this.userObj={
           userId: this.users.length+1,
-          username: this.form.value["username"],
-          email: this.form.value["email"],
-          password: this.form.value["password"],
-          phone: this.form.value["phone"],
+          username: this.signupForm.value["username"],
+          email: this.signupForm.value["email"],
+          password: this.signupForm.value["password"],
+          phone: this.signupForm.value["phone"],
         }
         this.users.push(this.userObj);
         localStorage.setItem('UserData', JSON.stringify(this.users))

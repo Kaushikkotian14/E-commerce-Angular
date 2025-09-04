@@ -1,4 +1,7 @@
-<h1>Reviews <b>({{productReviews.length}})</b><span><button class="add-button" mat-raised-button color="warn" (click)="addReview()"><mat-icon>add</mat-icon> Add Review</button></span> </h1>
+<h1>Reviews <b>({{productReviews.length}})</b><span>
+
+    @if(this.orderProductCheck){
+    <button class="add-button" mat-raised-button color="warn" (click)="addReview()"><mat-icon>add</mat-icon> Add Review</button>}</span> </h1>
 
 <div >
 @for (productReview of productReviews; track productReview.reviewId) {

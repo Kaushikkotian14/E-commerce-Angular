@@ -5,9 +5,29 @@
   <mat-label><mat-icon>search</mat-icon> Search</mat-label>
   <input matInput (keyup)='search($event)'>
 </mat-form-field>
-</div>
 
-   <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
+<mat-form-field class="filter">
+      <mat-label>Select Category</mat-label>
+<mat-select formControlName="category" > 
+        @for (category of categories; track category) {
+        <mat-option [value]="category.value" (click)="categoryData(category.value)">{{ category.name }}</mat-option>
+        }
+      </mat-select>
+      </mat-form-field>
+
+      @if(this.category !== 'All'){
+              <mat-button-toggle-group class="toggle"  (change)="toggle($event.value)">
+  <mat-button-toggle value="In Stock" >In Stock</mat-button-toggle>
+  <mat-button-toggle value="Out of Stock">Out of Stock</mat-button-toggle>
+</mat-button-toggle-group>
+      }
+
+
+</div >
+
+
+      
+   <table mat-table [dataSource]="productDataSource" matSort  class="mat-elevation-z8">
 
   <ng-container matColumnDef="img">
     <th mat-header-cell *matHeaderCellDef mat-sort-header >
@@ -76,39 +96,3 @@
  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                  showFirstLastButtons>
   </mat-paginator>
-
-
-
-<!--     <mat-grid-tile>
-      <mat-card class="custom-card">
-        <mat-card-header class ="header">
-          <mat-card-title class="title"><b>{{ product.productName }}</b></mat-card-title>
-   <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
-                                      <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openDialog(product)">Edit</button>
-                                        <button mat-menu-item (click)="deleteProduct(product.productId)">Delete</button>
-                                    </mat-menu>
-
-        </mat-card-header>
-
-        <img mat-card-image src={{product.img}} alt="Profile Photo"/>
-
-        <mat-card-content>
-          <p>
-            <b>Description:</b> {{ product.description }} <br>
-            <b>Category:</b> {{ product.category }} <br />
-            <b>Cost :</b>  {{ product.cost }} <br />
-            <b> Quantity:</b> {{ product.quantity}} <br />
-            <b> Availability:</b> {{ product.quantity}} <br />
-
-          </p>
-        </mat-card-content>
-
-        <mat-card-actions align="end">
-      <button mat-button color="accent" ><mat-icon>bookmark</mat-icon>Add to Cart</button>
-      <button mat-button color="warn" (click)="productDetail(product)"><mat-icon>shopping_cart</mat-icon>Shop now</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile> -->

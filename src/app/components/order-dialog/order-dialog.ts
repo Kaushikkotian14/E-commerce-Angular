@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, FormGroup,FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { productModel } from '../../core/models/product.model';
 import { orderModel } from '../../core/models/order.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,38 +24,38 @@ export interface OrderDialogData {
   styleUrl: './order-dialog.scss'
 })
 export class OrderDialog {
-public orderForm: FormGroup;
-public cart!:cartModel[];
-public userCart!:cartModel[];
-public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '{}')
+  public orderForm: FormGroup;
+  public cart!: cartModel[];
+  public userCart!: cartModel[];
+  public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<OrderDialog>,
-    private orderService :Order,
-    private productService:Product,
-    private cartService :Cart,
+    private orderService: Order,
+    private productService: Product,
+    private cartService: Cart,
     @Inject(MAT_DIALOG_DATA) public data: OrderDialogData
   ) {
     this.orderForm = this.fb.group({
-      address:[ '', Validators.required],
+      address: ['', Validators.required],
       // quantity: [ null, Validators.required],
     });
   }
 
   public save() {
     if (this.orderForm.valid) {
-     this.userCart= this.data.userCart
-    const address= String(this.orderForm.value['address'])
-    this.dialogRef.close(
+      this.userCart = this.data.userCart
+      const address = String(this.orderForm.value['address'])
+      this.dialogRef.close(
 
-        this.orderService.addOrderByCart(this.userCart,this.data.totalAmount,address)       
+        this.orderService.addOrderByCart(this.userCart, this.data.totalAmount, address)
       );
-      for(const cart of this.data.userCart){
-      this.productService.updateQuantity(cart.product,cart.quantity)}
-  alert("Ordered placed successfully")
+      for (const cart of this.data.userCart) {
+        this.productService.updateQuantity(cart.product, cart.quantity)
+      }
+      alert("Ordered placed successfully")
 
-      
     }
 
   }
@@ -63,5 +63,5 @@ public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '
   public close() {
     this.dialogRef.close();
   }
-  
+
 }

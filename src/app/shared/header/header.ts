@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
  import { MatButtonModule } from '@angular/material/button';
 import { RouterLink,Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth-service';
+import { Cart } from '../../core/services/cart';
 
 @Component({
   selector: 'app-header',
@@ -11,14 +12,19 @@ import { AuthService } from '../../core/services/auth-service';
   styleUrl: './header.scss'
 })
 export class Header implements OnInit {
-  public isLoggedIn=false
-constructor(private router:Router, private authService:AuthService){}
+  public isLoggedIn:boolean=false
+  public cartQuantity:number=0;
+constructor(private router:Router, private authService:AuthService, private cartService:Cart){}
 
 ngOnInit(): void {
     this.authService.isLoggedIn$().subscribe(status => {
       this.isLoggedIn = status;
     });
-    console.log(this.isLoggedIn)
+    this.cartService.cartQuantity$().subscribe(quantity=>
+    this.cartQuantity=quantity
+
+    )
+    console.log(this.cartQuantity)
   }
 
 

@@ -1,11 +1,11 @@
 <h1 class="header" header><b>Order Details ({{userOrder.length}})</b></h1>
 @for(order of userOrder; track $index) {
     <mat-card class="order-container"> 
-    <h1 class="header" header><b>Total ({{order.totalCost}})</b></h1>
-            <mat-card-actions align="end">
+    <h1 class="header" header><b>Total : {{order.totalCost | currency:'INR' :'symbol':'1.0-2'}}</b></h1>
+            <!-- <mat-card-actions align="end">
         <button matFab extended class="remove-button" (click)="removeOrder(order.orderId)">
             <mat-icon>close</mat-icon></button>
-    </mat-card-actions>
+    </mat-card-actions> -->
     @for(cart of order.cart; track cart.cartId){
 <mat-card class="custom-card" (click)="cardClick(cart.product!.productId)">
    
