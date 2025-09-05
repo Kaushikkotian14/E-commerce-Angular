@@ -11,17 +11,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Cart } from '../../core/services/cart';
 import { ReactiveFormsModule,FormControl } from '@angular/forms';
-import { OrderDialog } from '../order-dialog/order-dialog';
+import { OrderDialog } from '../order-dialog/order-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Review } from '../review/review';
+import { Review } from '../review/review.component';
 import { cartModel } from '../../core/models/cart.model';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-product-details',
   imports: [CurrencyPipe,MatButton,MatIcon,MatFormFieldModule,MatInputModule,ReactiveFormsModule,MatDialogModule,Review,MatCardModule],
-  templateUrl: './product-details.html',
-  styleUrl: './product-details.scss'
+  templateUrl: './product-details.component.html',
+  styleUrl: './product-details.component.scss'
 })
 export class ProductDetails implements OnInit{
 public id!:number;

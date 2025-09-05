@@ -15,8 +15,8 @@ const emailPattern=/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
 @Component({
   selector: 'app-sign-up',
   imports: [MatFormFieldModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCardModule, RouterLink, MatInputModule],
-  templateUrl: './sign-up.html',
-  styleUrl: './sign-up.scss'
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss'
 })
 export class SignUp implements OnInit {
   public signupForm: FormGroup;

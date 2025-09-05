@@ -9,8 +9,8 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-product-categories',
   imports: [MatCardModule,MatCardModule,MatButtonModule,MatGridListModule,MatDialogModule,RouterLink],
-  templateUrl: './product-categories.html',
-  styleUrl: './product-categories.scss'
+  templateUrl: './product-categories.component.html',
+  styleUrl: './product-categories.component.scss'
 })
 export class ProductCategories {
 

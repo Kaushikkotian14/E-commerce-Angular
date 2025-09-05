@@ -27,8 +27,8 @@ import { cartModel } from '../../core/models/cart.model';
 @Component({
   selector: 'app-product-dashboard',
   imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe,MatButtonToggleModule],
-  templateUrl: './product-dashboard.html',
-  styleUrl: './product-dashboard.scss'
+  templateUrl: './product-dashboard.component.html',
+  styleUrl: './product-dashboard.component.scss'
 })
 
 export class ProductDashboard implements AfterViewInit, OnInit {

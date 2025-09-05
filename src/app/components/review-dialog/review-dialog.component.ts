@@ -10,8 +10,8 @@ import { Reviews } from '../../core/services/reviews';
 @Component({
   selector: 'app-review-dialog',
   imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './review-dialog.html',
-  styleUrl: './review-dialog.scss'
+  templateUrl: './review-dialog.component.html',
+  styleUrl: './review-dialog.component.scss'
 })
 export class ReviewDialog {
 public reviewForm: FormGroup;

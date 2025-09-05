@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Order } from '../../core/services/order';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { OrderDialog } from '../order-dialog/order-dialog';
+import { OrderDialog } from '../order-dialog/order-dialog.component';
 import { productModel } from '../../core/models/product.model';
 import { Product } from '../../core/services/product';
 
@@ -18,8 +18,8 @@ import { Product } from '../../core/services/product';
 @Component({
   selector: 'app-cart',
   imports: [MatCardModule, MatIcon, CurrencyPipe, MatButtonModule, MatDialogModule],
-  templateUrl: './cart.html',
-  styleUrl: './cart.scss'
+  templateUrl: './cart.component.html',
+  styleUrl: './cart.component.scss'
 })
 export class Cart implements OnInit {
   public cart!: cartModel[];

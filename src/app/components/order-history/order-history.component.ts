@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-order-history',
   imports: [MatCardModule,MatIconModule,CurrencyPipe,DatePipe,MatButtonModule],
-  templateUrl: './order-history.html',
-  styleUrl: './order-history.scss'
+  templateUrl: './order-history.component.html',
+  styleUrl: './order-history.component.scss'
 })
 export class OrderHistory implements OnInit{
 public order!:orderModel[];

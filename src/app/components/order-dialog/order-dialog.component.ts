@@ -20,8 +20,8 @@ export interface OrderDialogData {
 @Component({
   selector: 'app-order-dialog',
   imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './order-dialog.html',
-  styleUrl: './order-dialog.scss'
+  templateUrl: './order-dialog.component.html',
+  styleUrl: './order-dialog.component.scss'
 })
 export class OrderDialog {
   public orderForm: FormGroup;

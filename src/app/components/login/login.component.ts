@@ -13,8 +13,8 @@ import { AuthService } from '../../core/services/auth-service';
 @Component({
   selector: 'app-login',
   imports: [MatFormFieldModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCardModule, RouterLink, MatInputModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
 })
 export class Login implements OnInit{
  loginForm: FormGroup;
