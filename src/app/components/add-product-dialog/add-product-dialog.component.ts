@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-add-product-dialog',
   imports: [ReactiveFormsModule,MatDialogModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatSelectModule,MatIconModule],
-  templateUrl: './add-product-dialog.html',
-  styleUrls: ['./add-product-dialog.scss'],
+  templateUrl: './add-product-dialog.component.html',
+  styleUrls: ['./add-product-dialog.component.scss'],
 })
 export class AddProductDialog {
   public productForm: FormGroup;

@@ -16,8 +16,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Review } from '../review/review';
 import { cartModel } from '../../core/models/cart.model';
 import { MatCardModule } from '@angular/material/card';
-import { ParamMap } from '@angular/router';
-
 
 @Component({
   selector: 'app-product-details',
@@ -38,22 +36,20 @@ public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '
   constructor( private activatedRoute: ActivatedRoute, private productService:Product, private authService:AuthService, private cartService:Cart,private dialog: MatDialog,private router:Router){}
 
 ngOnInit(): void {
+  console.log("initiated");
 this.getProduct();
 this.getCart();
   
 } 
 
-
-
 public getProduct(){
   this.authService.login(this.currentUser)
  this.products= this.productService.getProducts();
-  // this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
-  
-  this.activatedRoute.params.subscribe((params)=>{    
-     this.id=Number(params['id'])
-     console.log(typeof(this.id),this.id,params)
-  })
+  this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
+  // this.activatedRoute.params.subscribe((params)=>{    
+  //    this.id=Number(params['id'])
+    
+  // })
 
   // this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
   //     this.id = Number(params.get('id'));
@@ -103,8 +99,8 @@ public placeOrder(product?: productModel) {
   }
 
   public cardClick(id:number){
-    console.log(id)
-    this.router.navigate(['/product-details/', id])
+    this.router.navigate(['/product-details/', id]);
+    this.getProduct()
 }
 }
 

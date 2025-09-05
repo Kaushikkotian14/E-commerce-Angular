@@ -35,7 +35,7 @@ public currentUser!: userModel;
     }
   }
   
-  onSubmit() {
+  public onSubmit() {
     const email = this.loginForm.value["email"]
     const password = this.loginForm.value["password"]
      

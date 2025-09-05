@@ -39,7 +39,7 @@
   
   <ng-container matColumnDef="productName" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by productName">
-      Name
+     <b>Name </b> 
     </th>
     <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> <b>{{product.productName}}</b> </td>
   </ng-container>
@@ -47,7 +47,7 @@
   
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
-      Description
+     <b> Description</b> 
     </th>
     <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.description}} </td>
   </ng-container>
@@ -55,27 +55,27 @@
 
   <ng-container matColumnDef="category" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by category">
-      Category
+     <b>Category </b> 
     </th>
     <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.category}} </td>
   </ng-container>
 
   <ng-container matColumnDef="cost">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cost">
-      Cost
+     <b>Cost </b> 
     </th>
     <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{ product.cost | currency:'INR' :'symbol':'1.0-2' }} </td>
   </ng-container>
 
    <ng-container matColumnDef="quantity" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by quantity">
-      Quantity
+     <b>Quantity </b> 
     </th>
     <td mat-cell *matCellDef="let product" (click)="cardClick(product!.productId)"> {{product.quantity}} </td>
   </ng-container>
 
    <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef> Action</th>
+    <th mat-header-cell *matHeaderCellDef><b>Action </b> </th>
     <td mat-cell *matCellDef="let product">
        <!-- <button mat-button color="accent"  (click)="productDetail(product.productId)"><mat-icon>info</mat-icon>View product</button> -->
       <!-- <button mat-button color="warn"><mat-icon>shopping_cart</mat-icon>Shop now</button> -->
@@ -89,8 +89,8 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="productDisplayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: productDisplayedColumns;"></tr>
 </table>
 
  <mat-paginator [pageSizeOptions]="[5, 10, 20]"

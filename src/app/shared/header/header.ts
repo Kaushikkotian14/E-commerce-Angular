@@ -13,7 +13,7 @@ import { Cart } from '../../core/services/cart';
 })
 export class Header implements OnInit {
   public isLoggedIn:boolean=false
-  public cartQuantity:number=0;
+  public cartQuantity!:number;
 constructor(private router:Router, private authService:AuthService, private cartService:Cart){}
 
 ngOnInit(): void {
@@ -27,12 +27,9 @@ ngOnInit(): void {
     console.log(this.cartQuantity)
   }
 
-
 public logOut(){
   this.authService.logOut();
    window.location.replace('/login');
-  
-  
 }
 
 }

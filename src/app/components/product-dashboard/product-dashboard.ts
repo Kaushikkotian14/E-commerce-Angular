@@ -9,7 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Product } from '../../core/services/product';
 import { productModel } from '../../core/models/product.model';
-import { AddProductDialog } from '../add-product-dialog/add-product-dialog';
+import { AddProductDialog } from '../add-product-dialog/add-product-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,7 +21,8 @@ import { AuthService } from '../../core/services/auth-service';
 import { userModel } from '../../core/models/user.model';
 import { CategoryModel } from '../../core/models/category.model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { Cart } from '../../core/services/cart';
+import { cartModel } from '../../core/models/cart.model';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -34,17 +35,19 @@ export class ProductDashboard implements AfterViewInit, OnInit {
   public products: productModel[] = []
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
   public category:string='All';
-  public displayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
+  public carts!:cartModel[];
+  public userCarts!:cartModel[];
+  public productDisplayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
   public productDataSource = new MatTableDataSource<productModel>();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService) { }
+  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService, private cartService:Cart) { }
 
   ngOnInit(): void {
     this.getProducts();
-    console.log(this.productDataSource)
+    this.getCarts();
 
   }
 
@@ -57,6 +60,13 @@ export class ProductDashboard implements AfterViewInit, OnInit {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
     this.productDataSource.data = this.products;
+  }
+
+  public getCarts(){
+    this.carts=this.cartService.getCart()
+    this.userCarts=this.carts.filter(cart=>cart.userId === this.currentUser.userId)
+    this.cartService.setCartQuantiy(this.userCarts.length)
+    console.log("carts",this.userCarts)
   }
 
   public openDialog(product?: productModel) {

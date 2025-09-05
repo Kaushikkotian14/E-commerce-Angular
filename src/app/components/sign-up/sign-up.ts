@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { userModel } from '../../core/models/user.model';
 import { passwordCheck } from '../../shared/validators/password.validator';
 
+const phonePattern=/^(\d{10})$/;
+const emailPattern=/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
+
 @Component({
   selector: 'app-sign-up',
   imports: [MatFormFieldModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCardModule, RouterLink, MatInputModule],
@@ -19,18 +22,18 @@ export class SignUp implements OnInit {
   public signupForm: FormGroup;
   public users: userModel[] = [];
   public userObj!: userModel;
-
+  public checkPasswordValue!:boolean;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(emailPattern),]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required,],
-      phone: ['', Validators.required],},
-       { validators: passwordCheck() });
+      phone: ['', Validators.required, Validators.pattern(phonePattern),],},
+       );
   }
-
+// { validators: passwordCheck() }
   ngOnInit(): void {
     const userData = localStorage.getItem('UserData');
     if (userData != null) {
@@ -39,17 +42,20 @@ export class SignUp implements OnInit {
   }
 
   
-  public passwordCheck(): ValidatorFn {
-      return (control: AbstractControl): ValidationErrors | null => {
-        const password = control.get('password');
-        const confirmPassword = control.get('confirmPassword');
-
-        if (!password || !confirmPassword || password.value === confirmPassword.value) {
-          return null;
+  public passwordCheck() {
+        const password = String(this.signupForm.value.password)
+        const confirmPassword = String(this.signupForm.value.confirmPassword)
+console.log(password,confirmPassword)
+        if (password && confirmPassword && password !== confirmPassword) {
+          this.checkPasswordValue=true
+          console.log("diff")
+        }else{
+          this.checkPasswordValue=false
+           console.log("same")
         }
-        return { passwordsMismatch: true };
-      };
-    }
+        
+      }
+    
 
   public onSubmit() {
     if (this.signupForm.valid) {
