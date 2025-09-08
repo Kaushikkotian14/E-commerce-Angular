@@ -1,16 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
-import { productModel } from '../../core/models/product.model';
-import { orderModel } from '../../core/models/order.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Order } from '../../core/services/order';
-import { Product } from '../../core/services/product';
-import { Cart } from '../../core/services/cart';
+import { Order } from '../../core/services/order.service';
+import { Product } from '../../core/services/product.service';
+import { Cart } from '../../core/services/cart.service';
 import { cartModel } from '../../core/models/cart.model';
 import { userModel } from '../../core/models/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface OrderDialogData {
   userCart: cartModel[];
@@ -35,6 +34,7 @@ export class OrderDialog {
     private orderService: Order,
     private productService: Product,
     private cartService: Cart,
+    private snackBar:MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: OrderDialogData
   ) {
     this.orderForm = this.fb.group({
@@ -48,16 +48,18 @@ export class OrderDialog {
       this.userCart = this.data.userCart
       const address = String(this.orderForm.value['address'])
       this.dialogRef.close(
-
         this.orderService.addOrderByCart(this.userCart, this.data.totalAmount, address)
       );
       for (const cart of this.data.userCart) {
         this.productService.updateQuantity(cart.product, cart.quantity)
       }
-      alert("Ordered placed successfully")
-
+       this.snackBar.open('Ordered placed successfully', 'Close', {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     }
-
   }
 
   public close() {

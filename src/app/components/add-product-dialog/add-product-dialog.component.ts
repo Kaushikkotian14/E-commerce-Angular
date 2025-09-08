@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -17,8 +18,9 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AddProductDialog {
   public productForm: FormGroup;
-
+  public categories!:CategoryModel[]
   constructor(
+    private categoryService:CategoryService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddProductDialog>,
     @Inject(MAT_DIALOG_DATA) public data: productModel
@@ -33,6 +35,8 @@ export class AddProductDialog {
       cost: [data?.cost || null, Validators.required],
       quantity: [data?.quantity || null, Validators.required],
     });
+    this.categories= this.categoryService.getCategory()
+
   }
 
   get imgArray(): FormArray {
@@ -60,13 +64,4 @@ export class AddProductDialog {
     this.dialogRef.close();
   }
 
-  categories: CategoryModel[] = [
-    { name: 'Electronic Appliances', value: 'Electronic Appliances' },
-    { name: 'Grocery', value: 'Grocery' },
-    { name: 'Cosmetics', value: 'Cosmetics' },
-    { name: 'Fashion', value: 'Fashion' },
-    { name: 'Food', value: 'Food' },
-    { name: 'Toys', value: 'Toys' },
-    { name: 'Sports', value: 'Sports' },
-  ];
 }

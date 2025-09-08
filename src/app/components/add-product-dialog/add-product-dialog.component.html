@@ -41,7 +41,7 @@
       <mat-label>Select Category</mat-label>
       <mat-select formControlName="category">
         @for (category of categories; track category) {
-        <mat-option [value]="category.value">{{ category.name }}</mat-option>
+        <mat-option [value]="category.categoryName">{{ category.categoryName }}</mat-option>
         }
       </mat-select>
       <mat-error> @if (productForm.get('category')?.invalid) { Category is required } </mat-error>

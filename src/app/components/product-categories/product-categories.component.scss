@@ -1,14 +1,15 @@
-.custom-card {
-  max-width: 500px;
-  background-color: rgb(129, 197, 253);
-}
+ mat-card-header,
+      mat-card-content{
+        display: flex;
+        justify-content: center;
+      }
+      mat-card {
+        margin: 80px auto;
+        max-width: 400px;      
+      }
 
-.example-header-image {
+      // button {
+      //   width: 100%;
+      // }
 
-  background-size: cover;
-}
-
-p{
-    font-size: large;
-
-}
+      

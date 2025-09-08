@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { userModel } from '../../core/models/user.model';
-import { AuthService } from '../../core/services/auth-service';
-
+import { AuthService } from '../../core/services/auth-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +16,12 @@ import { AuthService } from '../../core/services/auth-service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class Login implements OnInit{
- loginForm: FormGroup;
-public users:userModel[]=[]
-public currentUser!: userModel;
+export class Login implements OnInit {
+  loginForm: FormGroup;
+  public users: userModel[] = []
+  public currentUser!: userModel;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService:AuthService ) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -34,27 +34,33 @@ public currentUser!: userModel;
       this.users = JSON.parse(userData)
     }
   }
-  
+
   public onSubmit() {
     const email = this.loginForm.value["email"]
     const password = this.loginForm.value["password"]
-     
+
     if (this.loginForm.valid) {
-     const currentUser = this.users.find((user:userModel)=> user.email == email && user.password == password);
-
-     if(currentUser != undefined)
-     this.authService.login(currentUser);
-    if(localStorage.getItem('currentUser')){
-      alert('Login successful!');
-      this.router.navigate(['/product-dashboard']);
+      const currentUser = this.users.find((user: userModel) => user.email == email && user.password == password);
+      if (currentUser != undefined)
+        this.authService.login(currentUser);
+      if (localStorage.getItem('currentUser')) {
+        this.snackBar.open('Login successful!', 'Close', {
+          duration: 2000,
+          panelClass: ['success-snackbar']
+        });
+        this.router.navigate(['/product-dashboard']);
+      }
+      else {
+        this.snackBar.open('"Invalid Login Credentials", "Try again!"', 'Close', {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+      }
     }
-    else{
-    alert("Invalid credentials");
-  }
-    }  
-      
   }
 
-  }
+}
 
 

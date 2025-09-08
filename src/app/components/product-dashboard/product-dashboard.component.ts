@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, ViewChild, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -7,7 +7,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Product } from '../../core/services/product';
+import { Product } from '../../core/services/product.service';
 import { productModel } from '../../core/models/product.model';
 import { AddProductDialog } from '../add-product-dialog/add-product-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -17,12 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { userModel } from '../../core/models/user.model';
 import { CategoryModel } from '../../core/models/category.model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { Cart } from '../../core/services/cart';
+import { Cart } from '../../core/services/cart.service';
 import { cartModel } from '../../core/models/cart.model';
+import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -39,16 +40,18 @@ export class ProductDashboard implements AfterViewInit, OnInit {
   public userCarts!:cartModel[];
   public productDisplayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
   public productDataSource = new MatTableDataSource<productModel>();
+  public toggleOption:string ='All';
+  public categories!: CategoryModel[]
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService, private cartService:Cart) { }
+  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService, private cartService:Cart, private categoryService:CategoryService) { }
 
   ngOnInit(): void {
     this.getProducts();
     this.getCarts();
-
+    
   }
 
   ngAfterViewInit() {
@@ -60,6 +63,7 @@ export class ProductDashboard implements AfterViewInit, OnInit {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
     this.productDataSource.data = this.products;
+   this.categories= this.categoryService.getCategory()
   }
 
   public getCarts(){
@@ -86,11 +90,9 @@ export class ProductDashboard implements AfterViewInit, OnInit {
           const final: productModel = parsedResult;
           if (product) {
             this.productService.updateProduct(final);
-            console.log("update", final)
             this.getProducts();
           } else {
             this.productService.addProduct(final);
-            console.log("add", final)
             this.getProducts();
           }
         }
@@ -116,37 +118,43 @@ public cardClick(id:number){
    this.router.navigate(['/product-details/', id])
 }
 
-categories: CategoryModel[] = [
-    { name: 'All', value: 'All' },
-    { name: 'Electronic Appliances', value: 'Electronic Appliances' },
-    { name: 'Grocery', value: 'Grocery' },
-    { name: 'Cosmetics', value: 'Cosmetics' },
-    { name: 'Fashion', value: 'Fashion' },
-    { name: 'Food', value: 'Food' },
-    { name: 'Toys', value: 'Toys' },
-    { name: 'Sports', value: 'Sports' },
-  ];
-
   public categoryData(category:string){
     this.category=category;
+    this.toggleOption = 'All';
     console.log(category)
     if(category === 'All'){
       this.getProducts()
     }else{
  this.productDataSource.data= this.products.filter(product=>product.category===category)
    console.log( this.productDataSource.data)
-    } 
+    }  
   }
 
   public toggle(value:string){
-  
-  if(value === "In Stock"){
+    this.toggleOption = value
+    if( this.category !== 'All'){
+  if (this.toggleOption === "All" ){
+    this.productDataSource.data= this.products.filter(product=> product.category=== this.category)
+  }
+  else if(this.toggleOption === "In Stock"){
        this.productDataSource.data= this.products.filter(product=>product.quantity>0 && product.category=== this.category)
     }
     else {
- this.productDataSource.data= this.products.filter(product=>product.quantity === 0 && product.category=== this.category)
+ this.productDataSource.data= this.products.filter(product=>product.quantity === 0 && product.category=== this.category )
    console.log( this.productDataSource.data)
     } 
+  }else{
+    if (this.toggleOption === "All" ){
+    this.getProducts()
+  }
+  else if(this.toggleOption === "In Stock"){
+       this.productDataSource.data= this.products.filter(product=>product.quantity>0 )
+    }
+    else {
+ this.productDataSource.data= this.products.filter(product=>product.quantity === 0 )
+   console.log( this.productDataSource.data)
+    } 
+  }
 }
 
 }

@@ -1,51 +1,29 @@
-<mat-grid-list cols="3" rowHeight="1:1" gutterSize="8px">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title><b>Add Category</b></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+   <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <input matInput placeholder="Enter category name" formControlName="category" />
+    <mat-error>
+        @if (categoryForm.get('category')?.invalid) { Category is required }
+      </mat-error>
+  </mat-form-field><br>  
+    <button mat-raised-button color="primary" type="submit" [disabled]="!categoryForm.valid">Add</button><br><br>
+</form>
+  </mat-card-content>
+</mat-card>
 
-    <mat-grid-tile>
-      <mat-card class="custom-card">
-        <mat-card-header>
-          <mat-card-title><b>Treatment</b></mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="treatment.png" alt="treatment">
-        <mat-card-content>
-          <p> All procedure details are available here</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-      <button matFab extended routerLink="/procedures">  View Treatments</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
+<div align="center"> @for ( category of categories; track $index){
+<p> <span><b> {{category.categoryId}}  : {{category.categoryName}} </b> 
+<button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <!-- <button mat-menu-item (click)="openDialog(product)">Edit</button> -->
+        <button mat-menu-item (click)="deleteCategory(category.categoryId)">Delete</button>
+      </mat-menu> </span> </p>  
+}</div>
 
-    <mat-grid-tile>
-              <mat-card class="custom-card">
-        <mat-card-header>
-          <mat-card-title><b>Medicines</b></mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="medicine.png" alt="treatment">
-        <mat-card-content>
-          <p> All medicines details are available here</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-      <button matFab extended routerLink="/medicines">  View Medicines</button>
-        </mat-card-actions>
-      </mat-card>
-
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <mat-card class="custom-card">
-        <mat-card-header>
-          <mat-card-title><b>Rooms</b></mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="room.png" alt="treatment">
-        <mat-card-content>
-          <p> All rooms details and availability status are available here</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-      <button matFab extended routerLink="/rooms">  View Rooms</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  
-
-    
-</mat-grid-list>

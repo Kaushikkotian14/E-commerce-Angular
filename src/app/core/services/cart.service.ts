@@ -21,10 +21,10 @@ private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
       return JSON.parse(localStorage.getItem('cart') || '[]')
     }
 
-   public addToCart(product: productModel,quantity:number) {
+  public addToCart(product: productModel,quantity:number) {
   const carts = this.getCart();
   const cart: cartModel = {
-    cartId: carts.length + 1,
+    cartId: Math.floor(Math.random() * 100000),
     userId: this.currentUser.userId,
     userEmail: this.currentUser.email,
     quantity: quantity,

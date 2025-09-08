@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { orderModel } from '../../core/models/order.model';
-import { Order } from '../../core/services/order';
+import { Order } from '../../core/services/order.service';
 import { userModel } from '../../core/models/user.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { Router } from '@angular/router';
 
 @Component({

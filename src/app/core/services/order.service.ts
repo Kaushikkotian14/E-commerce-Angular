@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { userModel } from '../models/user.model';
 import { productModel } from '../models/product.model';
 import { orderModel } from '../models/order.model';
-import { Product } from '../../core/services/product';
+import { Product } from '../../core/services/product.service';
 import { Inject } from '@angular/core';
 import { cartModel } from '../models/cart.model';
 
@@ -20,7 +20,7 @@ export class Order {
      public addOrder(cart: cartModel[],quantity:number,address:string) {
     const orders = this.getOrders();
     const order: orderModel = {
-      orderId: orders.length + 1,
+      orderId: Math.floor(Math.random() * 100000),
       userId: this.currentUser.userId,
       userEmail: this.currentUser.email,
       orderedDate:new Date(),

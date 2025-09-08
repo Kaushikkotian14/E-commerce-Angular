@@ -2,10 +2,10 @@
     <span class="title"><b>E-Mart</b></span>
     @if(isLoggedIn){
     <span class="tabs">
-        <button mat-button (click)="logOut()">LogOut</button>
-        <button mat-button routerLink="order-history">Order History</button>
-        <button mat-button routerLink="cart">Cart <b>@if(this.cartQuantity>0){({{this.cartQuantity}})}</b></button>
-        <button mat-button routerLink="product-dashboard">Dashboard</button>
+        <button mat-button (click)="logOut()"><mat-icon>logout</mat-icon>LogOut</button>
+        <button mat-button routerLink="order-history"><mat-icon>list</mat-icon>Order History</button>
+        <button mat-button routerLink="cart"><mat-icon>add_shopping_cart</mat-icon>Cart <b>@if(this.cartQuantity>0){({{this.cartQuantity}})}</b></button>
+        <button mat-button routerLink="product-dashboard"><mat-icon>view_list</mat-icon>Dashboard</button>
     </span>
     }
 </mat-toolbar>

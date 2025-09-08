@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { cartModel } from '../../core/models/cart.model';
-import { Cart as CartService } from '../../core/services/cart';
+import { Cart as CartService } from '../../core/services/cart.service';
 import { userModel } from '../../core/models/user.model';
 import { MatIcon } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Order } from '../../core/services/order';
+import { Order } from '../../core/services/order.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDialog } from '../order-dialog/order-dialog.component';
 import { productModel } from '../../core/models/product.model';
-import { Product } from '../../core/services/product';
+import { Product } from '../../core/services/product.service';
 
 
 @Component({

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
  import { MatButtonModule } from '@angular/material/button';
 import { RouterLink,Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth-service';
-import { Cart } from '../../core/services/cart';
+import { AuthService } from '../../core/services/auth-service.service';
+import { Cart } from '../../core/services/cart.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
-  imports: [MatToolbarModule, MatButtonModule,RouterLink],
+  imports: [MatToolbarModule, MatButtonModule,RouterLink,MatIcon],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

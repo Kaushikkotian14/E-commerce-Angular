@@ -1,13 +1,24 @@
  mat-card-header,
-      mat-card-content{
-        display: flex;
-        justify-content: center;
-      }
-      mat-card {
-        margin: 80px auto;
-        max-width: 400px;      
-      }
+ mat-card-content {
+   display: flex;
+   justify-content: center;
+ }
 
-      button {
-        width: 100%;
-      }
+ mat-card {
+   margin: 80px auto;
+   max-width: 400px;
+ }
+
+ button {
+   width: 100%;
+ }
+
+ .success-snackbar {
+   background-color: green;
+   color: white;
+ }
+
+ .error-snackbar {
+   background-color: red;
+   color: white;
+ }

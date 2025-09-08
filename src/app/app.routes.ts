@@ -18,7 +18,7 @@ export const routes: Routes = [
        {
         path: 'product-details/:id',
         
-        loadComponent: () => import('./components/product-details/product-details.component').then(m => m.ProductDetails),
+        loadComponent: () => import('./components/product-details/product-details.component').then(m => m.ProductDetails),canActivate: [authGuard],
       },
        {
         path: 'cart',
@@ -30,7 +30,7 @@ export const routes: Routes = [
       },
              {
         path: 'product-categories',
-        loadComponent: () => import('./components/product-categories/product-categories.component').then(m => m.ProductCategories),
+        loadComponent: () => import('./components/product-categories/product-categories.component').then(m => m.ProductCategories),canActivate: [authGuard],
       },
 
 ];
