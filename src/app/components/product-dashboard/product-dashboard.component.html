@@ -17,9 +17,9 @@
   </mat-form-field>
 
   <mat-button-toggle-group class="toggle" value={{toggleOption}} (change)="toggle($event.value)">
-    <mat-button-toggle value='All'>All</mat-button-toggle>
-    <mat-button-toggle value="In Stock">In Stock</mat-button-toggle>
-    <mat-button-toggle value="Out of Stock">Out of Stock</mat-button-toggle>
+    <mat-button-toggle value='All'><b>All</b></mat-button-toggle>
+    <mat-button-toggle value="In Stock"><b>In Stock</b></mat-button-toggle>
+    <mat-button-toggle value="Out of Stock"><b>Out of Stock</b></mat-button-toggle>
   </mat-button-toggle-group>
 </div>
 
@@ -86,5 +86,7 @@
   <tr mat-header-row *matHeaderRowDef="productDisplayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: productDisplayedColumns;"></tr>
 </table>
-
+   @if(this.productDataSource.data.length === 0 ){
+    <div class="emptyCart"><h1><mat-icon>remove_shopping_cart</mat-icon> Product not found</h1> </div>
+   }
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>

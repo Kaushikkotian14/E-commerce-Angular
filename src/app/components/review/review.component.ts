@@ -64,7 +64,7 @@ export class Review implements OnInit {
     this.userOrders = this.orders.filter(order => order.userId === this.currentUser.userId);
     this.userOrders.forEach(userOrder => {
       userOrder.cart?.forEach(cartItem => {
-        this.userCartProductId.push(cartItem.product.productId)
+        this.userCartProductId.push(cartItem.productId)
         this.orderProductCheck = Number(this.userCartProductId.find(idData => idData === this.id))
       }
       )

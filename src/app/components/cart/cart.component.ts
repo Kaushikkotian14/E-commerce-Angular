@@ -13,7 +13,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDialog } from '../order-dialog/order-dialog.component';
 import { productModel } from '../../core/models/product.model';
 import { Product } from '../../core/services/product.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cart',
@@ -22,13 +22,16 @@ import { Product } from '../../core/services/product.service';
   styleUrl: './cart.component.scss'
 })
 export class Cart implements OnInit {
-  public cart!: cartModel[];
-  public userCart!: cartModel[];
-  public totalAmount!: number
+  public cart: cartModel[] = [];
+  public userCart: cartModel[] = [];
+  public totalAmount: number = 0
   public product: productModel | undefined;
-  public products!: productModel[];
+  public products: productModel[] = [];
+  public cartProducts: productModel[] = [];
+  public tempUserCart: cartModel[] = [];
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private orderService: Order, private dialog: MatDialog, private productService: Product) { }
+  public quantityAvailable: boolean = false;
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private orderService: Order, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getCart();
@@ -41,12 +44,20 @@ export class Cart implements OnInit {
 
   public getCart() {
     this.authService.login(this.currentUser);
-
     this.cart = this.cartService.getCart();
-    console.log("cart", this.cart)
+    this.getProduct()
     this.userCart = this.cart.filter(cart => cart.userId === this.currentUser.userId)
-    this.totalAmount = this.userCart.reduce((sum, userCart) => sum + userCart.totalCost, 0);
-    console.log('usercart', this.userCart)
+
+    this.userCart.forEach(cartItem => {
+      const foundProduct = this.products?.find(product => product.productId === cartItem.productId);
+      if (foundProduct) {
+        cartItem.product = foundProduct;
+      }
+      cartItem.totalCost = cartItem.quantity * cartItem.product?.cost!
+      this.totalAmount = this.userCart.reduce((sum, cartItem) => {
+        return sum + cartItem.quantity * cartItem.product?.cost!;
+      }, 0);
+    });
   }
 
   public removeCart(id: number) {
@@ -58,26 +69,39 @@ export class Cart implements OnInit {
     this.router.navigate(['/product-details/', id])
   }
 
-  public removeUserCart() {
 
-    this.cartService.deleteUserCart(this.currentUser.userId)
-  }
 
   public placeOrder() {
-    const dialogRef = this.dialog.open(OrderDialog, {
-      width: '400px',
-      data: {
-        userCart: this.userCart,
-        totalAmount: this.totalAmount
+    this.userCart.forEach(cartItem => {
+
+      if (cartItem.quantity > cartItem.product?.quantity!) {
+        this.quantityAvailable = true
       }
-    });
+    })
+    if (this.quantityAvailable === false) {
+      const dialogRef = this.dialog.open(OrderDialog, {
+        width: '400px',
+        data: {
+          userCart: this.userCart,
+          totalAmount: this.totalAmount
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.cartService.setCartQuantiy(0)
+        this.getCart();
+        this.getProduct()
+      });
+    }
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.removeUserCart()
-      this.getCart();
-      this.getProduct()
-    });
-
+    if (this.quantityAvailable === true) {
+      this.snackBar.open('Product is out of stock', 'Close', {
+        duration: 2000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+      this.quantityAvailable = false;
+    }
   }
 }
 

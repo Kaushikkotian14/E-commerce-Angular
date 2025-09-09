@@ -25,11 +25,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetails implements OnInit {
-  public id!: number;
+  public productId!: number;
   public showReview: boolean = false;
   public quantityValue = new FormControl(0);
   public product: productModel | undefined;
-  public products!: productModel[];
+  public products: productModel[] = [];
   public categoryProducts!: productModel[];
   public cart!: cartModel[];
   public userCart!: cartModel[];
@@ -37,16 +37,14 @@ export class ProductDetails implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private productService: Product, private authService: AuthService, private cartService: Cart, private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    console.log("initiated");
     this.getProduct();
     this.getCart();
-
   }
 
   public getProduct() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
-    this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
+    this.productId = parseInt(this.activatedRoute.snapshot.paramMap.get('id') || '');
     // this.activatedRoute.params.subscribe((params)=>{    
     //    this.id=Number(params['id'])
 
@@ -56,7 +54,7 @@ export class ProductDetails implements OnInit {
     //     this.id = Number(params.get('id'));
     //     console.log(typeof(this.id),this.id,params)
     //   });
-    this.product = this.products.find(data => data.productId === this.id)
+    this.product = this.products.find(data => data.productId === this.productId)
     this.categoryProducts = this.products.filter(data => data.category === this.product?.category && data.productId !== this.product.productId)
 
   }
@@ -70,7 +68,7 @@ export class ProductDetails implements OnInit {
   public addToCart(product: productModel) {
     if (product.quantity > 0 && Number(this.quantityValue.value) > 0 && (product.quantity >= this.quantityValue.value!)) {
       const quantity = Number(this.quantityValue.value)
-      this.cartService.addToCart(product, quantity);
+      this.cartService.addToCart(product, quantity,this.currentUser);
       this.getCart()
       this.cartService.setCartQuantiy(this.userCart.length)
       this.snackBar.open('Product added to cart successfully', 'Close', {

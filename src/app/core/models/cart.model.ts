@@ -5,7 +5,8 @@ export interface cartModel{
    cartId:number;
    userId:number;
    userEmail?:userModel["email"];
+   productId:number;
    quantity:number;
-   totalCost:number;
-   product:productModel;
+   totalCost?:number;
+   product?:productModel;
 }

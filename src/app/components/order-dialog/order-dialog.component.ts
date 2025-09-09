@@ -43,6 +43,10 @@ export class OrderDialog {
     });
   }
 
+  public removeUserCart() {
+    this.cartService.deleteUserCart(this.currentUser.userId)
+  }
+
   public save() {
     if (this.orderForm.valid) {
       this.userCart = this.data.userCart
@@ -51,7 +55,7 @@ export class OrderDialog {
         this.orderService.addOrderByCart(this.userCart, this.data.totalAmount, address)
       );
       for (const cart of this.data.userCart) {
-        this.productService.updateQuantity(cart.product, cart.quantity)
+        this.productService.updateQuantity(cart.product!, cart.quantity)
       }
        this.snackBar.open('Ordered placed successfully', 'Close', {
         duration: 2000,
@@ -59,6 +63,7 @@ export class OrderDialog {
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
+      this.removeUserCart()
     }
   }
 

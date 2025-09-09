@@ -21,21 +21,23 @@ private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
       return JSON.parse(localStorage.getItem('cart') || '[]')
     }
 
-  public addToCart(product: productModel,quantity:number) {
+  public addToCart(product: productModel,quantity:number,currentUser:userModel) {
   const carts = this.getCart();
   const cart: cartModel = {
     cartId: Math.floor(Math.random() * 100000),
-    userId: this.currentUser.userId,
-    userEmail: this.currentUser.email,
+    userId: currentUser.userId,
+    userEmail: currentUser.email,
+    productId:product.productId,
     quantity: quantity,
-    totalCost:quantity*product.cost,
-    product: product
   };
-
   carts.push(cart);
   console.log(carts);
   localStorage.setItem('cart', JSON.stringify(carts));
 }
+
+   public updateCart(){
+
+   }
 
     public deleteCart(id:number){
     const carts = this.getCart();

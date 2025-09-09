@@ -27,7 +27,7 @@ import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-product-dashboard',
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe,MatButtonToggleModule],
+  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe, MatButtonToggleModule],
   templateUrl: './product-dashboard.component.html',
   styleUrl: './product-dashboard.component.scss'
 })
@@ -35,18 +35,18 @@ import { CategoryService } from '../../core/services/category.service';
 export class ProductDashboard implements AfterViewInit, OnInit {
   public products: productModel[] = []
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
-  public category:string='All';
-  public carts!:cartModel[];
-  public userCarts!:cartModel[];
+  public category: string = 'All';
+  public carts!: cartModel[];
+  public userCarts!: cartModel[];
   public productDisplayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
   public productDataSource = new MatTableDataSource<productModel>();
-  public toggleOption:string ='All';
+  public toggleOption: string ='All';
   public categories!: CategoryModel[]
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService, private cartService:Cart, private categoryService:CategoryService) { }
+  constructor(private productService: Product, private dialog: MatDialog, private router: Router, private authService: AuthService, private cartService: Cart, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -63,14 +63,13 @@ export class ProductDashboard implements AfterViewInit, OnInit {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
     this.productDataSource.data = this.products;
-   this.categories= this.categoryService.getCategory()
+    this.categories = this.categoryService.getCategory()
   }
 
-  public getCarts(){
-    this.carts=this.cartService.getCart()
-    this.userCarts=this.carts.filter(cart=>cart.userId === this.currentUser.userId)
+  public getCarts() {
+    this.carts = this.cartService.getCart()
+    this.userCarts = this.carts.filter(cart => cart.userId === this.currentUser.userId)
     this.cartService.setCartQuantiy(this.userCarts.length)
-    console.log("carts",this.userCarts)
   }
 
   public openDialog(product?: productModel) {
@@ -114,47 +113,44 @@ export class ProductDashboard implements AfterViewInit, OnInit {
     this.router.navigate(['/product-details/', id])
   }
 
-public cardClick(id:number){
-   this.router.navigate(['/product-details/', id])
-}
+  public cardClick(id: number) {
+    this.router.navigate(['/product-details/', id])
+  }
 
-  public categoryData(category:string){
-    this.category=category;
-    this.toggleOption = 'All';
-    console.log(category)
-    if(category === 'All'){
+  public categoryData(category: string) {
+    this.category = category;
+    if (category === 'All') {
       this.getProducts()
-    }else{
- this.productDataSource.data= this.products.filter(product=>product.category===category)
-   console.log( this.productDataSource.data)
-    }  
+      this.toggle(this.toggleOption)
+    } {
+      this.productDataSource.data = this.products.filter(product => product.category === category)
+      this.toggle(this.toggleOption)
+    }
   }
 
-  public toggle(value:string){
+  public toggle(value: string) {
     this.toggleOption = value
-    if( this.category !== 'All'){
-  if (this.toggleOption === "All" ){
-    this.productDataSource.data= this.products.filter(product=> product.category=== this.category)
-  }
-  else if(this.toggleOption === "In Stock"){
-       this.productDataSource.data= this.products.filter(product=>product.quantity>0 && product.category=== this.category)
+    if (this.category !== 'All') {
+      if (this.toggleOption === "All") {
+        this.productDataSource.data = this.products.filter(product => product.category === this.category)
+      }
+      else if (this.toggleOption === "In Stock") {
+        this.productDataSource.data = this.products.filter(product => product.quantity > 0 && product.category === this.category)
+      }
+      else if(this.toggleOption === "Out of Stock"){
+        this.productDataSource.data = this.products.filter(product => product.quantity === 0 && product.category === this.category)
+      }
+    } else {
+      if (this.toggleOption === "All") {
+        this.getProducts()
+      }
+      else if (this.toggleOption === "In Stock") {
+        this.productDataSource.data = this.products.filter(product => product.quantity > 0)
+      }
+      else {
+        this.productDataSource.data = this.products.filter(product => product.quantity === 0)
+      }
     }
-    else {
- this.productDataSource.data= this.products.filter(product=>product.quantity === 0 && product.category=== this.category )
-   console.log( this.productDataSource.data)
-    } 
-  }else{
-    if (this.toggleOption === "All" ){
-    this.getProducts()
   }
-  else if(this.toggleOption === "In Stock"){
-       this.productDataSource.data= this.products.filter(product=>product.quantity>0 )
-    }
-    else {
- this.productDataSource.data= this.products.filter(product=>product.quantity === 0 )
-   console.log( this.productDataSource.data)
-    } 
-  }
-}
 
 }

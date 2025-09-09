@@ -10,8 +10,9 @@ import { userModel } from '../../core/models/user.model';
 import { passwordCheck } from '../../shared/validators/password.validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-const phonePattern = /^(\d{10})$/;
-const emailPattern = /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
+const phonePattern = /^\S.*$^(\d{10})$/;
+const emailPattern = /^\S.*$\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
+const blankSpace = /^\S.*$/;
 
 @Component({
   selector: 'app-sign-up',
@@ -28,11 +29,11 @@ export class SignUp implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private snackBar: MatSnackBar) {
     this.signupForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(emailPattern),]],
+      username: ['', [Validators.required, Validators.pattern(blankSpace) ]],
+      email: ['', [Validators.required, Validators.pattern(emailPattern),Validators.pattern(blankSpace),]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required,],
-      phone: ['', [Validators.required, Validators.pattern(phonePattern),]],
+      phone: ['', [Validators.required, Validators.pattern(phonePattern),Validators.pattern(blankSpace),]],
     },
     );
   }

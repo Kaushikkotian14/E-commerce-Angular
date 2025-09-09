@@ -9,7 +9,7 @@ export class AuthService {
   private isLoggedIn = new BehaviorSubject<boolean>(false);
 
    isLoggedIn$(): Observable<boolean> {
-    return this.isLoggedIn.asObservable();
+    return this.isLoggedIn;
   }
 
   public login(currentUser:userModel){
