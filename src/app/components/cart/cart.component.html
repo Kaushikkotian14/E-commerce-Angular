@@ -1,8 +1,7 @@
 <div>
-     <h1 class="header"><b>Cart Details ({{userCart.length}})</b> <br> </h1>
+     <h1 class="header"><b>Cart Details ({{userCart.length}})</b> <button matFab extended class="order" (click)="placeOrder()">Place Order</button> <br> </h1>
      @if(userCart.length>0){
      <h2 class="header"> <b>Total Cost : {{totalAmount | currency:'INR' :'symbol':'1.0-2'}}</b> </h2>
-     <span> <button matFab extended class="order" (click)="placeOrder()">Place Order</button></span>
      }
 </div>
 
@@ -17,11 +16,11 @@
 
      <mat-card-header class="header" (click)="cardClick(cart.product?.productId!)">
 
-          <mat-card-title class="title"><b>{{cart.product?.productName}}</b></mat-card-title>
+          <mat-card-title class="title"><b>{{cart.product?.productName}}</b>     <span class="total"> <b>Total : {{cart.totalCost | currency:'INR' :'symbol':'1.0-2' }} </b> </span></mat-card-title>
 
 
      </mat-card-header>
-     <span class="total"> <b>Total : {{cart.totalCost | currency:'INR' :'symbol':'1.0-2' }} </b> </span>
+
      <mat-card-content (click)="cardClick(cart.product?.productId!)">
           <img mat-card-image src={{cart.product?.img}} alt="Profile Photo" />
           <p class="content">
@@ -36,9 +35,8 @@
 
 
      </mat-card-content>
-     <mat-card-actions align="end">
-          <button matFab extended class="remove-button" (click)="removeCart(cart.cartId)">
-               <mat-icon>close</mat-icon></button>
-     </mat-card-actions>
+     <div ><button matFab extended class="remove-button"  (click)="removeCart(cart.cartId)">
+               <mat-icon>close</mat-icon></button></div>
+               <button class="coupon" matButton="tonal" ><mat-icon>local_offer</mat-icon>Apply Coupon</button>
 </mat-card>
 }

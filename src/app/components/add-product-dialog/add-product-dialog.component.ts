@@ -36,7 +36,6 @@ export class AddProductDialog {
       quantity: [data?.quantity || null, Validators.required],
     });
     this.categories= this.categoryService.getCategory()
-
   }
 
   get imgArray(): FormArray {

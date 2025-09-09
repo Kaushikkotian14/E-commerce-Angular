@@ -32,5 +32,9 @@ export const routes: Routes = [
         path: 'product-categories',
         loadComponent: () => import('./components/product-categories/product-categories.component').then(m => m.ProductCategories),canActivate: [authGuard],
       },
+                   {
+        path: 'coupons',
+        loadComponent: () => import('./components/coupons/view-coupons/view-coupons.component').then(m => m.ViewCoupons),canActivate: [authGuard],
+      },
 
 ];

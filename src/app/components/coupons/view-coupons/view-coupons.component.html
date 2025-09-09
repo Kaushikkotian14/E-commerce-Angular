@@ -1,0 +1,17 @@
+  <button class="coupons"  matFab extended color="primary" routerLink="/coupons" (click)="openCouponDialog()"><mat-icon>discount</mat-icon>Create Coupons</button>
+
+  <div class="coupon-container"> 
+  @for(coupon of coupons;track $index){
+  <mat-card class="card">
+   <div class="coupons"><b>Cupon Id : </b>{{coupon.couponId}} 
+    <button matFab (click)="deleteCoupon(coupon.couponId)"> <mat-icon>delete</mat-icon> </button></div>
+      <div class="coupons"><b>Cupon Code : </b>{{coupon.couponCode}}</div>
+      <div class="coupons"><b>Discount : </b>{{coupon.discount}}%</div>
+      <div class="coupons"><b>Offer aplicable Above amount  : </b>{{coupon.minQuantityCost | currency:'INR'
+      :'symbol':'1.0-2'}}</div>
+      <div class="coupons"><b>Max Discounted Amount : </b>{{coupon.maxAmount | currency:'INR'
+      :'symbol':'1.0-2'}}</div>
+      
+  </mat-card>
+}
+</div>

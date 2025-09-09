@@ -1,5 +1,4 @@
 <h1 mat-dialog-title>Place Order</h1>
-
 <div mat-dialog-content>
     <form [formGroup]="orderForm">
         <mat-form-field>
@@ -11,20 +10,8 @@
                 }
             </mat-error>
         </mat-form-field>
-
-        <!-- <mat-form-field>
-            <mat-label>quantity</mat-label>
-            <input matInput formControlName="quantity" type="number" min="0" max={{data.quantity}} value="0" />
-            <mat-error>
-                @if (orderForm.get('quantity')?.invalid) {
-                Quantity is required
-                }
-            </mat-error>
-  </mat-form-field> -->
-
     </form>
 </div>
-
 <div mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
     <button mat-raised-button color="primary" (click)="save()">Buy Now</button>

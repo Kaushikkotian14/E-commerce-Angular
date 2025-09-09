@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Create Cupon</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="couponForm">
+        <mat-form-field>
+            <mat-label>CouponCode</mat-label>
+            <input matInput formControlName="couponCode" />
+            <mat-error>
+                @if (couponForm.get('couponCode')?.invalid) {
+                CouponCode is required
+                }
+            </mat-error>
+        </mat-form-field>
+
+                <mat-form-field>
+            <mat-label>Discount</mat-label>
+            <input type=number matInput formControlName="discount" min="0" />
+            <mat-error>
+                @if (couponForm.get('discount')?.invalid) {
+                Discount is required
+                }
+                 @if (couponForm.controls['discount'].hasError('pattern') && couponForm.controls['discount'].touched ){Negative number is not allowed }
+            </mat-error>
+        </mat-form-field>
+
+                <mat-form-field>
+            <mat-label>Max Discounted Amount</mat-label>
+            <input type=number  matInput formControlName="maxAmount" min="0"/>
+            <mat-error>
+                @if (couponForm.get('maxAmount')?.invalid) {
+                Amount is required
+                }
+                                 @if (couponForm.controls['discount'].hasError('pattern') && couponForm.controls['discount'].touched ){Negative number is not allowed }
+            </mat-error>
+        </mat-form-field>
+
+                <mat-form-field>
+            <mat-label>Offer aplicable Above amount </mat-label>
+            <input type=number  matInput formControlName="minQuantityCost" min="0"/>
+            <mat-error>
+                @if (couponForm.get('minQuantityCost')?.invalid) {
+                Amount is required
+                }
+                                 @if (couponForm.controls['minQuantityCost'].hasError('pattern') && couponForm.controls['minQuantityCost'].touched ){Negative number is not allowed }
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Create</button>
+</div>

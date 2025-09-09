@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CurrencyPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth-service.service';
 import { userModel } from '../../core/models/user.model';
 import { CategoryModel } from '../../core/models/category.model';
@@ -27,7 +27,7 @@ import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-product-dashboard',
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe, MatButtonToggleModule],
+  imports: [MatButtonModule, MatIconModule, MatCardModule, MatGridListModule, MatDialogModule, MatMenuModule, MatSort, MatSortModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatInputModule, MatFormFieldModule, CurrencyPipe, MatButtonToggleModule,RouterLink],
   templateUrl: './product-dashboard.component.html',
   styleUrl: './product-dashboard.component.scss'
 })
