@@ -12,9 +12,14 @@ public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '
 private carts=this.getCart()
 public userCarts=this.carts.filter(cart=>cart.userId===this.currentUser.userId)
 private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
+private offeredPrice = new BehaviorSubject<number>(0);
 
    cartQuantity$(): Observable<number> {
     return this.cartQuantity.asObservable();
+  }
+
+   offeredPrice$(): Observable<number> {
+    return this.offeredPrice.asObservable();
   }
 
   public getCart():cartModel[] {
@@ -35,10 +40,6 @@ private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
   localStorage.setItem('cart', JSON.stringify(carts));
 }
 
-   public updateCart(){
-
-   }
-
     public deleteCart(id:number){
     const carts = this.getCart();
   if(confirm("Are you sure you want to remove item from cart")){
@@ -53,6 +54,11 @@ private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
   public setCartQuantiy(quantity:number){
     this.cartQuantity.next(quantity)
     console.log(quantity)
+  }
+
+  public setofferedPrice(updatedPrice:number){
+    this.offeredPrice.next(updatedPrice)
+    console.log(updatedPrice)
   }
   
   public deleteUserCart(id:number){

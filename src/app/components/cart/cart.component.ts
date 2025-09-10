@@ -8,12 +8,15 @@ import { CurrencyPipe } from '@angular/common';
 import { AuthService } from '../../core/services/auth-service.service';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Order } from '../../core/services/order.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDialog } from '../order-dialog/order-dialog.component';
 import { productModel } from '../../core/models/product.model';
 import { Product } from '../../core/services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { couponMappingModel } from '../../core/models/coupon-mapping.model';
+import { CouponMappingService } from '../../core/services/coupon-mapping.service';
+import { ApplyCouponDialog } from '../coupons/apply-coupon-dialog/apply-coupon-dialog.component';
+
 
 @Component({
   selector: 'app-cart',
@@ -27,19 +30,30 @@ export class Cart implements OnInit {
   public totalAmount: number = 0
   public product: productModel | undefined;
   public products: productModel[] = [];
-  public cartProducts: productModel[] = [];
-  public tempUserCart: cartModel[] = [];
+  public couponMappings:couponMappingModel[]=[];
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
   public quantityAvailable: boolean = false;
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private orderService: Order, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar) { }
+  public isCouponAvailable: boolean = false;
+  public priceAfterDiscount:number=0;
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private couponMappingService:CouponMappingService, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getCart();
+    this.getCouponMappings();
   }
+
+
 
   public getProduct() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
+    this.cartService.offeredPrice$().subscribe(price=>
+       this.priceAfterDiscount=price
+    )
+  }
+
+  public getCouponMappings(){
+   this.couponMappings=this.couponMappingService.getCouponMappings()
   }
 
   public getCart() {
@@ -69,7 +83,22 @@ export class Cart implements OnInit {
     this.router.navigate(['/product-details/', id])
   }
 
+   public availableApplybutton(productId:number){
+   return this.couponMappings.find(coupon=>coupon.productId === productId)
+   }
 
+   public openApplyCouponDialog(cart:cartModel){
+    const dialogRef = this.dialog.open(ApplyCouponDialog, {
+        width: '400px',
+        data:cart
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getCart();
+        this.getProduct()
+      });
+   }
+
+   
 
   public placeOrder() {
     this.userCart.forEach(cartItem => {
@@ -94,7 +123,7 @@ export class Cart implements OnInit {
     }
 
     if (this.quantityAvailable === true) {
-      this.snackBar.open('Product is out of stock', 'Close', {
+      this.snackBar.open('Just check your cart some products are out of stock', 'Close', {
         duration: 2000,
         panelClass: ['success-snackbar'],
         horizontalPosition: 'center',

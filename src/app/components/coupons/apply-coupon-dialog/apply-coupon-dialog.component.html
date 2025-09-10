@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Apply Coupons to get <b>Discount</b></h1>
+<div mat-dialog-content>
+    <form [formGroup]="applyCouponForm">
+        <mat-form-field>
+            <mat-label>Enter your Coupon Code</mat-label>
+            <input matInput formControlName="couponCode" />
+            <mat-error>
+                @if (applyCouponForm.get('couponCode')?.invalid) {
+                Coupon Code is required
+                }
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Apply</button>
+</div>
