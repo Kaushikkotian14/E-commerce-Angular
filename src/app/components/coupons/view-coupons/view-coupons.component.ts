@@ -9,10 +9,13 @@ import { CouponsService } from '../../../core/services/coupons.service';
 import { AuthService } from '../../../core/services/auth-service.service';
 import { userModel } from '../../../core/models/user.model';
 import { couponModel } from '../../../core/models/coupon.model';
+import { couponMappingModel } from '../../../core/models/coupon-mapping.model';
+import { MatMenuModule } from '@angular/material/menu';
+import { productModel } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-view-coupons',
-  imports: [MatCardModule, MatIcon, CurrencyPipe, MatButtonModule, MatDialogModule],
+  imports: [MatCardModule, MatIcon, CurrencyPipe, MatButtonModule, MatDialogModule,MatMenuModule],
   templateUrl: './view-coupons.component.html',
   styleUrl: './view-coupons.component.scss'
 })
@@ -20,7 +23,8 @@ import { couponModel } from '../../../core/models/coupon.model';
 export class ViewCoupons implements OnInit{
     public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
     public coupons:couponModel[]=[]
-
+    public products:productModel[]=[]
+    public couponMappings!:couponMappingModel[]
   constructor(private dialog: MatDialog,private couponsService:CouponsService, private authService:AuthService){}
 
   ngOnInit(): void {
@@ -33,6 +37,7 @@ export class ViewCoupons implements OnInit{
     console.log(this.coupons)
   }
 
+   
   public openCouponDialog(){
   const dialogRef = this.dialog.open(CouponsDialog, {
           width: '400px',
@@ -46,8 +51,6 @@ export class ViewCoupons implements OnInit{
         this.couponsService.deleteCoupon(id)
         this.getCupons()
       }
-    
-       
-      
+
   }
 
