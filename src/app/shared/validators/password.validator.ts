@@ -6,7 +6,9 @@ import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
         const confirmPassword = control.get('confirmPassword');
         console.log(password?.value,confirmPassword?.value)
         if (password && confirmPassword && password.value !== confirmPassword.value) {
+          
           return  { passwordsMismatch: true };
+          
         }
           return null;
         

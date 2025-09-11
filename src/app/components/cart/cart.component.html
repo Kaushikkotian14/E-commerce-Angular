@@ -5,7 +5,6 @@
      }
      
 </div>
-{{priceAfterDiscount}}
 
 <div class="emptyCart">
      @if(userCart.length===0){
@@ -17,11 +16,8 @@
 <mat-card class="custom-card">
 
      <mat-card-header class="header">
-
           <mat-card-title class="title" ><b  (click)="cardClick(cart.product?.productId!)">{{cart.product?.productName}}</b>     <span class="total"  (click)="cardClick(cart.product?.productId!)"> <b>Total : {{cart.totalCost | currency:'INR' :'symbol':'1.0-2' }} </b></span>  <button matFab extended class="remove-button"  (click)="removeCart(cart.cartId)">
                <mat-icon>close</mat-icon></button></mat-card-title>
-
-
      </mat-card-header>
 
      <mat-card-content (click)="cardClick(cart.product?.productId!)">

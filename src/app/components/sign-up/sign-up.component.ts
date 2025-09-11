@@ -34,8 +34,13 @@ export class SignUp implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required,],
       phone: ['', [Validators.required, Validators.pattern(phonePattern),Validators.pattern(blankSpace),]],
-    },
+    }, { validators: passwordCheck(), updateOn: 'change'}
     );
+
+    this.signupForm.controls['confirmPassword'].valueChanges.subscribe((value) => {
+      console.log(this.signupForm.errors);
+      
+    })
   }
   // { validators: passwordCheck() }
   ngOnInit(): void {
