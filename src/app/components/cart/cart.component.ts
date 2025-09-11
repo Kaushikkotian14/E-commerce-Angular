@@ -35,6 +35,8 @@ export class Cart implements OnInit {
   public quantityAvailable: boolean = false;
   public isCouponAvailable: boolean = false;
   public priceAfterDiscount:number=0;
+  public discountedPrice:number=0;
+  public getProductId:number=0;
   constructor(private cartService: CartService, private authService: AuthService, private router: Router, private couponMappingService:CouponMappingService, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -43,13 +45,19 @@ export class Cart implements OnInit {
   }
 
 
-
   public getProduct() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
     this.cartService.offeredPrice$().subscribe(price=>
        this.priceAfterDiscount=price
     )
+    this.cartService.discountedPrice$().subscribe(price=>
+       this.discountedPrice=price
+    )
+    this.cartService.productId$().subscribe(productId=>
+      this.getProductId=productId
+    )
+           console.log("offered",this.priceAfterDiscount,this.discountedPrice,this.getProductId)
   }
 
   public getCouponMappings(){
@@ -67,10 +75,15 @@ export class Cart implements OnInit {
       if (foundProduct) {
         cartItem.product = foundProduct;
       }
+      if(this.priceAfterDiscount !== 0 && this.getProductId === cartItem.productId){
+       cartItem.totalCost = this.priceAfterDiscount
+      }else {    
       cartItem.totalCost = cartItem.quantity * cartItem.product?.cost!
+      }
       this.totalAmount = this.userCart.reduce((sum, cartItem) => {
         return sum + cartItem.quantity * cartItem.product?.cost!;
       }, 0);
+    this.totalAmount = this.totalAmount-this.discountedPrice;
     });
   }
 

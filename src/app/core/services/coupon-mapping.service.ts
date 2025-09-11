@@ -5,8 +5,6 @@ import { couponMappingModel } from '../models/coupon-mapping.model';
   providedIn: 'root'
 })
 export class CouponMappingService {
-
-
   
    public getCouponMappings():couponMappingModel[]{
       return JSON.parse(localStorage.getItem('couponMapping') || '[]')
@@ -19,10 +17,8 @@ export class CouponMappingService {
       localStorage.setItem('couponMapping', JSON.stringify(couponMappings));
     }
   
-     public deleteCoupon(id:number){
-      const couponMappings = this.getCouponMappings();   
-      const index = couponMappings.findIndex(data=> data.couponId == id);
-      couponMappings.splice(index);
+     public deleteCoupon(couponMappingId:number){
+      const couponMappings = this.getCouponMappings().filter(couponMapping=>couponMapping.couponId !== couponMappingId);  
       localStorage.setItem('couponMapping',JSON.stringify(couponMappings))
     
   } 

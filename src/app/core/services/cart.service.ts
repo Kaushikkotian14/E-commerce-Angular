@@ -13,13 +13,24 @@ private carts=this.getCart()
 public userCarts=this.carts.filter(cart=>cart.userId===this.currentUser.userId)
 private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
 private offeredPrice = new BehaviorSubject<number>(0);
+private discountedPrice = new BehaviorSubject<number>(0);
+private productId = new BehaviorSubject<number>(0);
 
    cartQuantity$(): Observable<number> {
     return this.cartQuantity.asObservable();
+   
   }
 
    offeredPrice$(): Observable<number> {
     return this.offeredPrice.asObservable();
+  }
+
+  discountedPrice$(): Observable<number> {
+    return this.discountedPrice.asObservable();
+  }
+
+  productId$(): Observable<number> {
+    return this.productId.asObservable();
   }
 
   public getCart():cartModel[] {
@@ -47,7 +58,6 @@ private offeredPrice = new BehaviorSubject<number>(0);
     carts.splice(index,1);
     localStorage.setItem('cart',JSON.stringify(carts))
     this.cartQuantity.next(0)
-    console.log("deleted",carts)
   }
   }
 
@@ -57,8 +67,18 @@ private offeredPrice = new BehaviorSubject<number>(0);
   }
 
   public setofferedPrice(updatedPrice:number){
-    this.offeredPrice.next(updatedPrice)
-    console.log(updatedPrice)
+    this.offeredPrice.next(updatedPrice) 
+  }
+
+   public setproductId(productId:number){
+    this.productId.next(productId) 
+    console.log("ID", this.productId)
+  }
+
+
+  public setdiscountedPrice(discountedPrice:number){
+       this.discountedPrice.next(discountedPrice)
+    console.log(discountedPrice)
   }
   
   public deleteUserCart(id:number){

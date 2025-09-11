@@ -34,10 +34,8 @@ export class ViewCoupons implements OnInit{
     public getCupons() {
     this.authService.login(this.currentUser)
     this.coupons = this.couponsService.getCoupons();
-    console.log(this.coupons)
   }
 
-   
   public openCouponDialog(){
   const dialogRef = this.dialog.open(CouponsDialog, {
           width: '400px',
