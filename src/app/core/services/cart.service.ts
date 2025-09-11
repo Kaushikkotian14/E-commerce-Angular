@@ -39,7 +39,7 @@ private productId = new BehaviorSubject<number>(0);
 
   public addToCart(product: productModel,quantity:number,currentUser:userModel) {
   const carts = this.getCart();
-  const findProduct = carts.find(cart=>cart.productId === product.productId)
+  const findProduct = carts.find(cart=>cart.productId === product.productId && cart.userId === currentUser.userId)
   if(!findProduct){
   const cart: cartModel = {
     cartId: Math.floor(Math.random() * 100000),

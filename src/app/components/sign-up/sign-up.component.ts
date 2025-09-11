@@ -10,8 +10,8 @@ import { userModel } from '../../core/models/user.model';
 import { passwordCheck } from '../../shared/validators/password.validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-const phonePattern = /^\S.*$^(\d{10})$/;
-const emailPattern = /^\S.*$\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
+const phonePattern = /^(\d{10})$/;
+const emailPattern = /\w+([\.-]?\w+)*@gmail*(\.\w{2,3})$/;
 const blankSpace = /^\S.*$/;
 
 @Component({
