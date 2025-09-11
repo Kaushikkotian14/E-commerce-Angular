@@ -67,10 +67,21 @@ export class ApplyCouponDialog implements OnInit {
         this.PriceAfterDiscount = totalCost - this.OfferedDiscount
         console.log(this.PriceAfterDiscount, this.OfferedDiscount)
         if (this.OfferedDiscount > couponData?.maxAmount!) {
+         
+          const updatedCart:cartModel={
+            ...this.data, isCouponApplied:true, totalCost:totalCost - couponData?.maxAmount!, couponId:couponData?.couponId
+          }
+          console.log("hi",updatedCart)
+          this.cartService.updateCartFromCoupon(updatedCart)
           this.cartService.setofferedPrice(totalCost - couponData?.maxAmount!)
           this.cartService.setdiscountedPrice(couponData?.maxAmount!)
           this.cartService.setproductId(foundMapping.productId)
         } else {
+          const updatedCart:cartModel={
+            ...this.data, isCouponApplied:true, totalCost:this.PriceAfterDiscount
+          }
+          console.log("hi",updatedCart)
+           this.cartService.updateCartFromCoupon(updatedCart)
           this.cartService.setofferedPrice(totalCost - this.OfferedDiscount)
           this.cartService.setdiscountedPrice(this.OfferedDiscount)
           this.cartService.setproductId(foundMapping.productId)

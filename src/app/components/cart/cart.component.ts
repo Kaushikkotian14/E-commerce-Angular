@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { couponMappingModel } from '../../core/models/coupon-mapping.model';
 import { CouponMappingService } from '../../core/services/coupon-mapping.service';
 import { ApplyCouponDialog } from '../coupons/apply-coupon-dialog/apply-coupon-dialog.component';
+import { CouponsService } from '../../core/services/coupons.service';
+import { couponModel } from '../../core/models/coupon.model';
 
 
 @Component({
@@ -33,11 +35,12 @@ export class Cart implements OnInit {
   public couponMappings:couponMappingModel[]=[];
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
   public quantityAvailable: boolean = false;
-  public isCouponAvailable: boolean = false;
+  public isCouponApplied: boolean = false;
   public priceAfterDiscount:number=0;
   public discountedPrice:number=0;
   public getProductId:number=0;
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private couponMappingService:CouponMappingService, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar) { }
+  public coupons:couponModel[]=[];
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router, private couponMappingService:CouponMappingService, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar, private couponsService:CouponsService) { }
 
   ngOnInit(): void {
     this.getCart();
@@ -48,12 +51,6 @@ export class Cart implements OnInit {
   public getProduct() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
-    this.cartService.offeredPrice$().subscribe(price=>
-       this.priceAfterDiscount=price
-    )
-    this.cartService.discountedPrice$().subscribe(price=>
-       this.discountedPrice=price
-    )
     this.cartService.productId$().subscribe(productId=>
       this.getProductId=productId
     )
@@ -62,6 +59,10 @@ export class Cart implements OnInit {
 
   public getCouponMappings(){
    this.couponMappings=this.couponMappingService.getCouponMappings()
+  }
+  
+  public getCoupons(){
+    this.coupons=this.couponsService.getCoupons()
   }
 
   public getCart() {
@@ -75,17 +76,16 @@ export class Cart implements OnInit {
       if (foundProduct) {
         cartItem.product = foundProduct;
       }
-      if(this.priceAfterDiscount !== 0 && this.getProductId === cartItem.productId){
-       cartItem.totalCost = this.priceAfterDiscount
-      }else {    
-      cartItem.totalCost = cartItem.quantity * cartItem.product?.cost!
+      if( !cartItem.isCouponApplied){
+          cartItem.totalCost = cartItem.quantity * cartItem.product?.cost!
       }
       this.totalAmount = this.userCart.reduce((sum, cartItem) => {
-        return sum + cartItem.quantity * cartItem.product?.cost!;
+        return sum + cartItem.totalCost!;
       }, 0);
-    this.totalAmount = this.totalAmount-this.discountedPrice;
     });
   }
+
+
 
   public removeCart(id: number) {
     this.cartService.deleteCart(id)
@@ -106,12 +106,29 @@ export class Cart implements OnInit {
         data:cart
       });
       dialogRef.afterClosed().subscribe(result => {
+       
         this.getCart();
         this.getProduct()
       });
    }
 
-   
+   public removeDiscount(cartId:number){
+    const cart= this.cartService.getCart()
+    const currentCart=cart.find(cart=> cart.cartId === cartId)
+    console.log(currentCart)
+    const updatedCart:cartModel={
+      ... currentCart!,isCouponApplied:false
+    }
+    
+    this.cartService.updateCartFromCoupon(updatedCart)
+    this.getCart()
+    this.snackBar.open('Coupon is removed', 'Close', {
+        duration: 2000,
+        panelClass: ['success-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+   }
 
   public placeOrder() {
     this.userCart.forEach(cartItem => {

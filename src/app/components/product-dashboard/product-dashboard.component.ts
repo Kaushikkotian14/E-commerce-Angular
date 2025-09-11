@@ -36,8 +36,8 @@ export class ProductDashboard implements AfterViewInit, OnInit {
   public products: productModel[] = []
   public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
   public category: string = 'All';
-  public carts!: cartModel[];
-  public userCarts!: cartModel[];
+  public carts: cartModel[]=[];
+  public userCarts: cartModel[]=[];
   public productDisplayedColumns: string[] = ['img', 'productName', 'description', 'category', 'cost', 'quantity', 'action'];
   public productDataSource = new MatTableDataSource<productModel>();
   public toggleOption: string ='All';
@@ -68,6 +68,8 @@ export class ProductDashboard implements AfterViewInit, OnInit {
 
   public getCarts() {
     this.carts = this.cartService.getCart()
+    console.log(this.carts);
+    
     this.userCarts = this.carts.filter(cart => cart.userId === this.currentUser.userId)
     this.cartService.setCartQuantiy(this.userCarts.length)
   }

@@ -9,8 +9,8 @@ import { Observable,BehaviorSubject } from 'rxjs';
 })
 export class Cart {
 public currentUser:userModel=JSON.parse(localStorage.getItem('currentUser') || '{}')
-private carts=this.getCart()
-public userCarts=this.carts.filter(cart=>cart.userId===this.currentUser.userId)
+private carts:cartModel[]=this.getCart()
+private userCarts:cartModel[]=this.carts.filter(cart=>cart.userId === this.currentUser.userId)
 private cartQuantity = new BehaviorSubject<number>(this.userCarts.length);
 private offeredPrice = new BehaviorSubject<number>(0);
 private discountedPrice = new BehaviorSubject<number>(0);
@@ -39,17 +39,57 @@ private productId = new BehaviorSubject<number>(0);
 
   public addToCart(product: productModel,quantity:number,currentUser:userModel) {
   const carts = this.getCart();
+  const findProduct = carts.find(cart=>cart.productId === product.productId)
+  if(!findProduct){
   const cart: cartModel = {
     cartId: Math.floor(Math.random() * 100000),
     userId: currentUser.userId,
-    userEmail: currentUser.email,
     productId:product.productId,
     quantity: quantity,
+    isCouponApplied:false
   };
   carts.push(cart);
   console.log(carts);
   localStorage.setItem('cart', JSON.stringify(carts));
+}else{
+  const findCart = carts.find(cart=> cart.cartId === findProduct.cartId)
+  
+  const addCart:cartModel={
+    ...findCart!, quantity: findCart?.quantity! + quantity
+  }
+  console.log("hl",addCart)
+  this.updateCart(addCart)
 }
+}
+
+  public updateCart(newCart:cartModel){
+    const carts:cartModel[] = this.getCart();
+    const updatedCart = carts.find(data => data.cartId == newCart.cartId)
+    if (updatedCart != undefined) {
+      updatedCart.cartId =  newCart.cartId
+      updatedCart.productId = newCart.productId;
+      updatedCart.quantity = newCart.quantity;
+      updatedCart.userId = newCart.userId;
+      updatedCart.totalCost =  newCart.totalCost;  
+    }
+    localStorage.setItem('cart', JSON.stringify(carts))
+  }
+   
+  public updateCartFromCoupon(newCart:cartModel){
+    const carts:cartModel[] = this.getCart();
+    const updatedCart = carts.find(data => data.cartId == newCart.cartId)
+    if (updatedCart != undefined) {
+      updatedCart.cartId =  newCart.cartId
+      updatedCart.productId = newCart.productId;
+      updatedCart.quantity = newCart.quantity;
+      updatedCart.userId = newCart.userId;
+      updatedCart.totalCost =  newCart.totalCost;
+      updatedCart.couponId = newCart.couponId;
+      updatedCart.isCouponApplied=newCart.isCouponApplied ;
+    }
+    console.log("hrr",updatedCart)
+    localStorage.setItem('cart', JSON.stringify(carts))
+  }
 
     public deleteCart(id:number){
     const carts = this.getCart();

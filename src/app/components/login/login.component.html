@@ -8,14 +8,18 @@
     <mat-label>Email</mat-label>
     <input matInput placeholder="Enter your registered email" formControlName="email" />
     <mat-error>
-        @if (loginForm.get('email')?.invalid) { Email is required }
+       @if ( loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched ) { Email is required }
+          @if (loginForm.controls['email'].hasError('pattern') && loginForm.controls['email'].touched ){Proper Email
+          is required }
       </mat-error>
   </mat-form-field><br>
   <mat-form-field>
   <mat-label>Password</mat-label>
   <input matInput type="password" placeholder="Enter your password" formControlName="password" />
   <mat-error>
-        @if (loginForm.get('password')?.invalid) { password is required }
+        @if (loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched) { password is required }
+         @if (loginForm.controls['password'].hasError('minlength') && loginForm.controls['password'].touched ){Above 8 character
+          is required }
       </mat-error>
 </mat-form-field><br>
     <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button><br><br>

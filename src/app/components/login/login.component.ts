@@ -10,6 +10,8 @@ import { userModel } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+const emailPattern = /^\S.*$\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})$/;
+
 @Component({
   selector: 'app-login',
   imports: [MatFormFieldModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatCardModule, RouterLink, MatInputModule],
@@ -23,8 +25,8 @@ export class Login implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required,Validators.pattern(emailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 

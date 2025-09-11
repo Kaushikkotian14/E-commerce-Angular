@@ -38,9 +38,9 @@
 
           </div> <br>
 
-
      </mat-card-content>
-               <span >@if(availableApplybutton(cart.productId)){<button class="coupon"  matButton="tonal" (click)="openApplyCouponDialog(cart)"><mat-icon>local_offer</mat-icon><b>Apply Coupon </b></button>}</span>
+               <span >@if(availableApplybutton(cart.productId) && !cart.isCouponApplied){<button class="coupon"  matButton="tonal" (click)="openApplyCouponDialog(cart)"><mat-icon>local_offer</mat-icon><b>Apply Coupon </b></button>}
+               @else if(availableApplybutton(cart.productId) && cart.isCouponApplied){<button class="coupon"  matButton="tonal" (click)="removeDiscount(cart.cartId)"><mat-icon>local_offer</mat-icon><b>Remove Discount  </b></button>}</span>
      <div > 
            </div>
               
