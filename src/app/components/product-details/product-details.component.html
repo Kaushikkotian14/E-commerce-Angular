@@ -16,11 +16,12 @@
       
 <div class="action-button"> 
   <input class="increment" matInput [formControl]="quantityValue" type="number" min="0" max={{product?.quantity}} value="0">
- <button mat-button color="accent" (click)="addToCart(product!)"> <mat-icon>bookmark</mat-icon>Add to Cart</button>
+ <button class="addtoCart" mat-button color="accent" (click)="addToCart(product!)"> <mat-icon>add_shopping_cart</mat-icon><b>Add to Cart </b> </button>
 <!-- <button mat-button color="warn" (click)="placeOrder()"><mat-icon>shopping_cart</mat-icon>Shop now</button> -->
 </div>
 
-<button mat-raised-button (click)="showReviewStatus()" class="review-button">View Reviews</button>
+<button mat-raised-button (click)="showReviewStatus()" class="review-button">
+ <b>View Reviews</b> </button>
 @if(showReview){
 <div class="review"  ><app-review [id]="product!.productId"></app-review> </div>
 }

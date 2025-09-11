@@ -27,7 +27,7 @@
      <mat-card-content (click)="cardClick(cart.product?.productId!)">
           <img mat-card-image src={{cart.product?.img}} alt="Profile Photo" />
           <p class="content">
-               <b>Description : </b>{{cart.product?.description}}
+               {{cart.product?.description}}
           </p>
           <div class="cost"><b> {{cart.product?.cost | currency:'INR' :'symbol':'1.0-2' }}</b> </div> <br>
           <div><b> Quantity added {{cart?.quantity}} </b> </div>
