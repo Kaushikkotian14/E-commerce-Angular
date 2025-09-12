@@ -6,7 +6,7 @@
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <mat-form-field>
         <mat-label>Full Name</mat-label>
-        <input matInput placeholder="Enter your full name" formControlName="username" />
+        <input matInput placeholder="Enter your full name" formControlName="username" autofocus/>
         <mat-error>
           @if (signupForm.controls['username'].hasError('required') && signupForm.controls['username'].touched ) { Name is required }
           @if (signupForm.controls['username'].hasError('pattern') && signupForm.controls['username'].touched ){Invalid UserName }
@@ -45,8 +45,8 @@
         <input matInput type="password" placeholder="Enter your password again" formControlName="confirmPassword"  />
         <mat-error>
           @if (signupForm.controls['confirmPassword'].hasError('required') && signupForm.controls['confirmPassword'].touched) { Password is required }
-           @if (signupForm.errors?.['passwordsMismatch'] && signupForm.controls['confirmPassword'].touched) {
-          passwords do not match here
+           @if (signupForm.controls['confirmPassword'].hasError('passwordsMismatch') && signupForm.controls['confirmPassword'].touched) {
+          passwords do not match 
           }
         </mat-error>
        

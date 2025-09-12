@@ -97,17 +97,6 @@ export class ProductDetails implements OnInit {
     }
   }
 
-  public placeOrder(product?: productModel) {
-    const dialogRef = this.dialog.open(OrderDialog, {
-      width: '400px',
-      data: product
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getProduct()
-    });
-  }
-
   public showReviewStatus() {
     this.showReview = !this.showReview;
   }
@@ -117,8 +106,3 @@ export class ProductDetails implements OnInit {
     this.getProduct()
   }
 }
-
-
-// this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-//       this.id = Number(params.get('id'));
-//     });

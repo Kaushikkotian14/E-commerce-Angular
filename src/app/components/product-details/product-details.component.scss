@@ -1,84 +1,93 @@
 img {
-  width:300px;
-  height:400px;
+  width: 300px;
+  height: 400px;
   border: 4px solid black;
   margin: 20px 20px 15px 20px;
 }
 
 .image-container {
-  display: flex;              
-  gap: 20px;                 
-  justify-content: center;    
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
 
-.content{
-    margin: 10px 20px 15px 20px;
-}
-
-.title{
-    margin: 10px 20px 15px 20px;
-    font-size: xx-large;
-}
-
-.description{
-   margin: 10px 20px 15px 20px;
-    font-size:larger;
-}
-
-.cost{
-   margin: 10px 20px 15px 20px;
-    font-size:xx-large;
-}
-
-.availability{
+.content {
   margin: 10px 20px 15px 20px;
-    font-size:x-large;
+  display: flex;
+  font-size: large;
+  max-width: 300px; 
 }
 
-.quantity{
+.title {
   margin: 10px 20px 15px 20px;
-   font-size: large;
+  font-size: xx-large;
 }
 
-.action-button{
-    margin: 10px 20px 15px 10px;
+.description {
+  margin: 10px 20px 15px 20px;
+  font-size: larger;
 }
 
-.increment{
-    margin: 10px 20px 15px 20px;
-   border: 2px solid black;
-   width: 70px;
-   height:30px;
+.cost {
+  margin: 10px 20px 15px 20px;
+  font-size: xx-large;
 }
 
-.review{
-    margin-top:20px;
+.availability {
+  margin: 10px 20px 15px 20px;
+  font-size: x-large;
 }
 
-.review-button{
-   margin-bottom:60px;
-  width:100%;
+.quantity {
+  margin: 10px 20px 15px 20px;
+  font-size: large;
+}
+
+.action-button {
+  margin: 10px 20px 15px 10px;
+}
+
+.increment {
+  margin: 10px 20px 15px 20px;
+  border: 2px solid black;
+  width: 70px;
+  height: 30px;
+}
+
+.review {
+  margin-top: 20px;
+}
+
+.review-button {
+  margin-bottom: 60px;
+  width: 100%;
   background-color: rgb(219, 225, 225);
 }
 
 
-.suggestion{
- 
-  display:flex;              
-  gap: 20px;              
+.suggestion {
+
+  display: flex;
+  gap: 20px;
   justify-content: center;
-  
+
 }
 
-.content{
-  display:flex;
-  font-size: large;
+h1 {
+  margin-left: 20px;
 }
 
-h1{
-  margin-left:20px;
-}
-
-.addtoCart{
+.addtoCart {
   background-color: rgb(244, 233, 219);
 }
+
+.product-container{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+
+
+
+

@@ -38,7 +38,6 @@ export class Cart implements OnInit {
   public isCouponApplied: boolean = false;
   public priceAfterDiscount:number=0;
   public discountedPrice:number=0;
-  public getProductId:number=0;
   public coupons:couponModel[]=[];
   constructor(private cartService: CartService, private authService: AuthService, private router: Router, private couponMappingService:CouponMappingService, private dialog: MatDialog, private productService: Product, private snackBar: MatSnackBar, private couponsService:CouponsService) { }
 
@@ -51,10 +50,6 @@ export class Cart implements OnInit {
   public getProduct() {
     this.authService.login(this.currentUser)
     this.products = this.productService.getProducts();
-    this.cartService.productId$().subscribe(productId=>
-      this.getProductId=productId
-    )
-           console.log("offered",this.priceAfterDiscount,this.discountedPrice,this.getProductId)
   }
 
   public getCouponMappings(){

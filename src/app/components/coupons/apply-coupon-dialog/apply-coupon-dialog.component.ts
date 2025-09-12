@@ -25,7 +25,6 @@ export class ApplyCouponDialog implements OnInit {
   public coupon!: couponModel;
   public PriceAfterDiscount: number = 0
   public OfferedDiscount: number = 0
-  // public currentUser: userModel = JSON.parse(localStorage.getItem('currentUser') || '{}')
 
   constructor(
     private fb: FormBuilder,
@@ -71,20 +70,15 @@ export class ApplyCouponDialog implements OnInit {
           const updatedCart:cartModel={
             ...this.data, isCouponApplied:true, totalCost:totalCost - couponData?.maxAmount!, couponId:couponData?.couponId
           }
-          console.log("hi",updatedCart)
           this.cartService.updateCartFromCoupon(updatedCart)
-          this.cartService.setofferedPrice(totalCost - couponData?.maxAmount!)
-          this.cartService.setdiscountedPrice(couponData?.maxAmount!)
-          this.cartService.setproductId(foundMapping.productId)
+         
         } else {
           const updatedCart:cartModel={
             ...this.data, isCouponApplied:true, totalCost:this.PriceAfterDiscount
           }
-          console.log("hi",updatedCart)
+         
            this.cartService.updateCartFromCoupon(updatedCart)
-          this.cartService.setofferedPrice(totalCost - this.OfferedDiscount)
-          this.cartService.setdiscountedPrice(this.OfferedDiscount)
-          this.cartService.setproductId(foundMapping.productId)
+        
         }
 
         this.snackBar.open(`Coupon is applied`, 'Close', {

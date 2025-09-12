@@ -25,12 +25,13 @@ ngOnInit(): void {
     this.cartQuantity=quantity
 
     )
-    console.log(this.cartQuantity)
   }
 
 public logOut(){
   this.authService.logOut();
-   window.location.replace('/login');
+  //  this.router.navigateByUrl('/login', { replaceUrl: true });
+  //  this.router.navigate(['/login']);
+  window.location.replace('/login');
 }
 
 }

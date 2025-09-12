@@ -6,7 +6,7 @@
    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput placeholder="Enter your registered email" formControlName="email" />
+    <input matInput placeholder="Enter your registered email" formControlName="email" autofocus/>
     <mat-error>
        @if ( loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched ) { Email is required }
           @if (loginForm.controls['email'].hasError('pattern') && loginForm.controls['email'].touched ){Proper Email

@@ -62,16 +62,18 @@ export class SignUp implements OnInit {
   }
 
   public onSubmit() {
+    const userEmail = String(this.signupForm.value.email)
+     const findUser = this.users.find(user=> user.email === userEmail)
     if (this.signupForm.valid) {
       if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
         this.snackBar.open('Passwords do not match!', 'Close', {
           duration: 2000,
           panelClass: ['error-snackbar'],
           horizontalPosition: 'center',
-          verticalPosition: 'bottom',
+          verticalPosition: 'top',
         });
       } else {
-        console.log(this.signupForm.value);
+      if(!findUser){
         this.userObj = {
           userId: Math.floor(Math.random() * 100000),
           username: this.signupForm.value["username"],
@@ -86,9 +88,17 @@ export class SignUp implements OnInit {
           duration: 2000,
           panelClass: ['success-snackbar'],
           horizontalPosition: 'center',
-          verticalPosition: 'bottom',
+          verticalPosition: 'top',
         });
         this.router.navigate(['/login']);
+      }else{
+                this.snackBar.open('User is already Registered ', 'Close', {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
       }
     }
   }
